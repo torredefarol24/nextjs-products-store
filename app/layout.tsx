@@ -1,7 +1,8 @@
+import { Footer } from "@/components/footer/Footer"
+import { Header } from "@/components/header/Header"
 import type { Metadata } from "next"
 import { Geist } from "next/font/google"
-import { Footer } from "./components/footer/Footer"
-import { Header } from "./components/header/Header"
+import "./globals.css"
 
 const geistSans = Geist({
 	subsets: ["latin"],
@@ -20,7 +21,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en" className={`${geistSans.variable} h-full`}>
-			<body className="min-h-screen bg-slate-50 text-slate-900 antialiased">
+			<body className="min-h-screen bg-slate-50 text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100">
 				<div className="mx-auto flex min-h-screen max-w-7xl flex-col px-4 py-4 sm:px-6 lg:px-8">
 					<Header />
 					<main className="flex-1 px-2 py-4 sm:px-0">{children}</main>
