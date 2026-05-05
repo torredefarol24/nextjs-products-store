@@ -2,10 +2,25 @@
 
 :root {
 	--background: #ffffff;
-	--foreground: #171717;
+	--foreground: #0f172a;
 	--surface: #ffffff;
 	--muted: #f8fafc;
 	--border: #e2e8f0;
+	--link: #475569;
+	--button-bg: #f8fafc;
+	--button-border: #cbd5e1;
+}
+
+html.dark {
+	--background: #0f172a;
+	--foreground: #f8fafc;
+	--surface: #111827;
+	--muted: #0f172a;
+	--border: #334155;
+	--link: #cbd5e1;
+	--button-bg: #1f2937;
+	--button-border: #475569;
+	color-scheme: dark;
 }
 
 @theme inline {
@@ -26,4 +41,39 @@ body {
 		BlinkMacSystemFont,
 		"Segoe UI",
 		sans-serif;
+}
+
+.theme-surface {
+	background: var(--surface);
+	border-color: var(--border);
+}
+
+.theme-border {
+	border-color: var(--border);
+}
+
+.theme-text {
+	color: var(--foreground);
+}
+
+.theme-text-muted {
+	color: var(--link);
+}
+
+.theme-link {
+	color: var(--link);
+}
+
+.theme-link:hover {
+	color: var(--foreground);
+}
+
+.theme-button {
+	background: var(--button-bg);
+	border-color: var(--button-border);
+	color: var(--foreground);
+}
+
+.theme-button:hover {
+	filter: brightness(0.95);
 }

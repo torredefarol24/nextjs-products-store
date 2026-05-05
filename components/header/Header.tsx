@@ -1,25 +1,36 @@
 "use client"
 
 import { APP_ROUTES } from "@/config/routes"
+import { useTheme } from "@/contexts/themes"
 import Link from "next/link"
 
-export function Header() {
+export function HeaderComponent() {
+	const { theme, toggleTheme } = useTheme()
+
 	return (
-		<header className="border-b border-slate-200 bg-white px-4 py-4 shadow-sm sm:px-6 lg:px-8">
+		<header className="theme-surface border-b px-4 py-4 shadow-sm sm:px-6 lg:px-8">
 			<div className="mx-auto flex w-full max-w-7xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-				<h1 className="text-xl font-semibold text-slate-900">Products Shop</h1>
+				<h1 className="text-xl font-semibold theme-text">Kyle&apos;s Store</h1>
 				<div className="flex flex-wrap items-center gap-3 sm:gap-4">
-					<nav className="flex flex-wrap items-center gap-3 text-sm text-slate-600 sm:gap-4">
-						<Link className="transition hover:text-slate-900" href="/">
+					<nav className="flex flex-wrap items-center gap-3 text-sm theme-text sm:gap-4">
+						<Link className="transition theme-link" href="/">
 							Home
 						</Link>
-						<Link className="transition hover:text-slate-900" href={APP_ROUTES.products}>
+						<Link className="transition theme-link" href={APP_ROUTES.products}>
 							Products
 						</Link>
-						<Link className="transition hover:text-slate-900" href={APP_ROUTES.contact}>
+						<Link className="transition theme-link" href={APP_ROUTES.contact}>
 							Contact
 						</Link>
 					</nav>
+
+					<button
+						type="button"
+						onClick={toggleTheme}
+						className="theme-button inline-flex h-9 items-center justify-center rounded-full border px-3 text-sm font-medium transition"
+					>
+						{theme === "light" ? "🌙 Dark" : "☀️ Light"}
+					</button>
 				</div>
 			</div>
 		</header>
