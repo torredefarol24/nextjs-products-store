@@ -48,6 +48,26 @@ body {
 	border-color: var(--border);
 }
 
+.theme-text {
+	color: var(--foreground);
+}
+
+.theme-text-muted {
+	color: var(--muted);
+}
+
+.theme-border {
+	border-color: var(--border);
+}
+
+.theme-link {
+	color: var(--link);
+}
+
+.theme-link:hover {
+	color: var(--foreground);
+}
+
 .theme-border {
 	border-color: var(--border);
 }
