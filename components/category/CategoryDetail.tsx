@@ -1,4 +1,4 @@
-import { ICategory } from "@/interfaces/platform"
+import { ICategory } from "@/interfaces/category"
 
 export default function CategoryDetailComponent({ category }: { category: ICategory | null }) {
 	if (!category) {

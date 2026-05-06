@@ -1,4 +1,4 @@
-import { IProduct } from "@/interfaces/platform"
+import { IProduct } from "@/interfaces/product"
 
 export default function ProductDetailComponent({ product }: { product: IProduct }) {
 	const discountedPrice = product.price * (1 - product.discountPercentage / 100)
