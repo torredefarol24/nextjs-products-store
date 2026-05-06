@@ -6,12 +6,11 @@ export function searchProducts(products: IProduct[], query: string): IProduct[] 
 	}
 
 	const normalized = query.trim().toLowerCase()
-
 	return products.filter((product) => {
 		return (
 			product.title.toLowerCase().includes(normalized) ||
 			product.description.toLowerCase().includes(normalized) ||
-			product.brand.toLowerCase().includes(normalized) ||
+			product.brand?.toLowerCase().includes(normalized) ||
 			product.category.toLowerCase().includes(normalized) ||
 			product.tags.some((tag) => tag.toLowerCase().includes(normalized))
 		)

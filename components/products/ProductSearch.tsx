@@ -4,7 +4,7 @@ interface SearchProps {
 	placeholder?: string
 }
 
-export default function ProductSearchComponent({
+export function ProductSearchComponent({
 	searchQuery,
 	onSearchChange,
 	placeholder = "Search products...",

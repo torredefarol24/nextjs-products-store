@@ -1,30 +1,42 @@
 "use client"
 
 import { IProductFilterState, ProductsListComponentProps } from "@/interfaces/product"
-import { filterProducts, getDefaultFilters } from "@/lib/productFilters"
+import { filterProducts, getDefaultFilters, searchProducts } from "@/lib/productFilters"
 import { useMemo, useState } from "react"
 import { ProductFilterComponent } from "./ProductFilter"
+import { ProductSearchComponent } from "./ProductSearch"
 import { ProductThumbnail } from "./ProductThumbnail"
 
 export default function ProductsListComponent({ products }: ProductsListComponentProps) {
+	const [searchQuery, setSearchQuery] = useState("")
 	const [filters, setFilters] = useState<IProductFilterState>(getDefaultFilters())
 	const [showFilters, setShowFilters] = useState(false)
 
-	// Apply filters
+	// Apply search and filters independently
 	const filteredProducts = useMemo(() => {
-		const result = filterProducts(products, filters)
-		return result
-	}, [products, filters])
+		const searched = searchProducts(products, searchQuery)
+		return filterProducts(searched, filters)
+	}, [products, searchQuery, filters])
 
 	const handleClearFilters = () => {
 		setFilters(getDefaultFilters())
 	}
 
+	const handleClearSearch = () => {
+		setSearchQuery("")
+	}
+
 	return (
 		<div className="space-y-6">
-			{/* Filter Controls */}
+			{/* Search + Filter Controls */}
 			<div className="space-y-4">
-				<div className="flex items-center justify-between">
+				<ProductSearchComponent
+					searchQuery={searchQuery}
+					onSearchChange={setSearchQuery}
+					placeholder="Search products by title, description, brand, category, or tags..."
+				/>
+
+				<div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
 					<button
 						onClick={() => setShowFilters(!showFilters)}
 						className="flex items-center gap-2 px-4 py-2 theme-border theme-surface border rounded-xl hover:theme-surface transition theme-text"
@@ -40,8 +52,29 @@ export default function ProductsListComponent({ products }: ProductsListComponen
 						Filters {showFilters ? "▼" : "▶"}
 					</button>
 
-					<div className="text-sm theme-text-muted">
-						{filteredProducts.length} of {products.length} products
+					<div className="flex flex-wrap items-center gap-3">
+						<div className="text-sm theme-text-muted">
+							{filteredProducts.length} of {products.length} products
+						</div>
+						{(searchQuery ||
+							filters.category ||
+							filters.brand ||
+							filters.minPrice ||
+							filters.maxPrice ||
+							filters.minRating ||
+							filters.availabilityStatus ||
+							filters.selectedTags.length > 0) && (
+							<button
+								onClick={() => {
+									handleClearFilters()
+									handleClearSearch()
+									setShowFilters(false)
+								}}
+								className="px-4 py-2 theme-link hover:theme-text transition text-sm"
+							>
+								Clear all
+							</button>
+						)}
 					</div>
 				</div>
 
@@ -67,16 +100,16 @@ export default function ProductsListComponent({ products }: ProductsListComponen
 						Try adjusting your search or filters to find what you&apos;re looking for.
 					</p>
 					<button
-						onClick={handleClearFilters}
+						onClick={handleClearSearch}
 						className="px-4 py-2 theme-link hover:theme-text transition"
 					>
-						Clear all filters
+						Clear search
 					</button>
 				</div>
 			) : (
 				<div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-					{filteredProducts.map((product, idx) => (
-						<ProductThumbnail key={idx} product={product} />
+					{filteredProducts.map((product) => (
+						<ProductThumbnail key={product.id} product={product} />
 					))}
 				</div>
 			)}
