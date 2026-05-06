@@ -1,7 +1,7 @@
-import { categories } from "@/data/category"
+import { ICategory } from "@/interfaces/platform"
 import Category from "./Category"
 
-export function CategoryListComponent() {
+export function CategoryListComponent({ categories }: { categories: ICategory[] }) {
 	return (
 		<section className="mx-auto max-w-6xl rounded-3xl border theme-border theme-surface p-6 shadow-sm sm:p-8">
 			<h2 className="text-3xl font-semibold theme-text">Product Categories</h2>

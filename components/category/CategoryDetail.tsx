@@ -1,9 +1,6 @@
-import { ICategoryDetailComponentProps } from "@/interfaces/platform"
-import { getCategoryDetailsById } from "@/lib/category"
+import { ICategory } from "@/interfaces/platform"
 
-export default function CategoryDetailComponent({ categoryId }: ICategoryDetailComponentProps) {
-	const category = getCategoryDetailsById(categoryId)
-
+export default function CategoryDetailComponent({ category }: { category: ICategory | null }) {
 	if (!category) {
 		return (
 			<section className="mx-auto max-w-6xl rounded-3xl border theme-border theme-surface p-6 shadow-sm sm:p-8">

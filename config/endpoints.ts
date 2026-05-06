@@ -1,1 +1,3 @@
-export const PRODUCTS_ENDPOINT = "https://dummyjson.com/docs/products"
+export const ENDPOINTS = {
+	products: "https://dummyjson.com/products",
+}
