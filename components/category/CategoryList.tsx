@@ -1,4 +1,4 @@
-import { ICategory } from "@/interfaces/product"
+import { ICategory } from "@/interfaces/category"
 import Category from "./Category"
 
 export function CategoryListComponent({ categories }: { categories: ICategory[] }) {

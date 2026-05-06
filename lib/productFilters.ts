@@ -1,5 +1,23 @@
 import { IProduct, IProductFilterState } from "@/interfaces/product"
 
+export function searchProducts(products: IProduct[], query: string): IProduct[] {
+	if (!query.trim()) {
+		return products
+	}
+
+	const normalized = query.trim().toLowerCase()
+
+	return products.filter((product) => {
+		return (
+			product.title.toLowerCase().includes(normalized) ||
+			product.description.toLowerCase().includes(normalized) ||
+			product.brand.toLowerCase().includes(normalized) ||
+			product.category.toLowerCase().includes(normalized) ||
+			product.tags.some((tag) => tag.toLowerCase().includes(normalized))
+		)
+	})
+}
+
 export function filterProducts(products: IProduct[], filters: IProductFilterState): IProduct[] {
 	return products.filter((product) => {
 		// Category filter
