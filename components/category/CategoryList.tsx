@@ -1,4 +1,4 @@
-import { categories } from "@/data/cateogry"
+import { categories } from "@/data/category"
 import Category from "./Category"
 
 export function CategoryListComponent() {
@@ -12,7 +12,12 @@ export function CategoryListComponent() {
 
 			<div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 				{categories.map((category, idx) => (
-					<Category key={idx} name={category.name} count={category.count} />
+					<Category
+						key={idx}
+						categoryId={category.categoryId}
+						name={category.name}
+						count={category.count}
+					/>
 				))}
 			</div>
 
