@@ -1,12 +1,11 @@
-export interface ICategory {
-	categoryId: number
-	name: string
-	count: number
-	subHeading?: string
-}
-
-export interface ICategoryDetailComponentProps {
-	categoryId: number
+export interface IProductFilterState {
+	category: string
+	brand: string
+	minPrice: string
+	maxPrice: string
+	minRating: string
+	availabilityStatus: string
+	selectedTags: string[]
 }
 
 export interface IProduct {
@@ -47,4 +46,15 @@ export interface IProduct {
 	}
 	thumbnail: string
 	images: string[]
+}
+
+export interface ProductFilterComponentProps {
+	products: IProduct[]
+	filters: IProductFilterState
+	onFilterChange: (filters: IProductFilterState) => void
+	onClearFilters: () => void
+}
+
+export interface ProductsListComponentProps {
+	products: IProduct[]
 }

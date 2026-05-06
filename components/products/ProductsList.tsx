@@ -1,25 +1,85 @@
-import { IProduct } from "@/interfaces/platform"
-import Link from "next/link"
+"use client"
 
-export default function ProductsListComponent({ products }: { products: IProduct[] }) {
+import { IProductFilterState, ProductsListComponentProps } from "@/interfaces/product"
+import { filterProducts, getDefaultFilters } from "@/lib/productFilters"
+import { useMemo, useState } from "react"
+import { ProductFilterComponent } from "./ProductFilter"
+import { ProductThumbnail } from "./ProductThumbnail"
+
+export default function ProductsListComponent({ products }: ProductsListComponentProps) {
+	const [filters, setFilters] = useState<IProductFilterState>(getDefaultFilters())
+	const [showFilters, setShowFilters] = useState(false)
+
+	// Apply filters
+	const filteredProducts = useMemo(() => {
+		const result = filterProducts(products, filters)
+		return result
+	}, [products, filters])
+
+	const handleClearFilters = () => {
+		setFilters(getDefaultFilters())
+	}
+
 	return (
-		<div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-			{products.map((product, idx) => (
-				<Link key={idx} href={`/products/${product.id}`}>
-					<div className="aspect-square overflow-hidden rounded-2xl theme-border theme-surface border">
-						<img
-							src={product.thumbnail}
-							alt={product.title}
-							className="h-full w-full object-cover"
+		<div className="space-y-6">
+			{/* Filter Controls */}
+			<div className="space-y-4">
+				<div className="flex items-center justify-between">
+					<button
+						onClick={() => setShowFilters(!showFilters)}
+						className="flex items-center gap-2 px-4 py-2 theme-border theme-surface border rounded-xl hover:theme-surface transition theme-text"
+					>
+						<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth={2}
+								d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
+							/>
+						</svg>
+						Filters {showFilters ? "▼" : "▶"}
+					</button>
+
+					<div className="text-sm theme-text-muted">
+						{filteredProducts.length} of {products.length} products
+					</div>
+				</div>
+
+				{/* Filter Panel */}
+				{showFilters && (
+					<div className="rounded-2xl theme-border theme-surface border p-6">
+						<ProductFilterComponent
+							products={products}
+							filters={filters}
+							onFilterChange={setFilters}
+							onClearFilters={handleClearFilters}
 						/>
 					</div>
-					<div className="rounded-2xl theme-border theme-surface border p-4">
-						<h3 className="font-semibold theme-text">{product.title}</h3>
-						<p className="mt-2 theme-text-muted">{product.description}</p>
-						<p className="mt-2 font-bold theme-text">${product.price}</p>
-					</div>
-				</Link>
-			))}
+				)}
+			</div>
+
+			{/* Products Grid */}
+			{filteredProducts.length === 0 ? (
+				<div className="text-center py-12">
+					<div className="text-6xl mb-4">🔍</div>
+					<h3 className="text-xl font-semibold theme-text mb-2">No products found</h3>
+					<p className="theme-text-muted mb-4">
+						Try adjusting your search or filters to find what you&apos;re looking for.
+					</p>
+					<button
+						onClick={handleClearFilters}
+						className="px-4 py-2 theme-link hover:theme-text transition"
+					>
+						Clear all filters
+					</button>
+				</div>
+			) : (
+				<div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+					{filteredProducts.map((product, idx) => (
+						<ProductThumbnail key={idx} product={product} />
+					))}
+				</div>
+			)}
 		</div>
 	)
 }
