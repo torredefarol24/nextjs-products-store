@@ -29,6 +29,12 @@ export function HeaderComponent() {
 						<Link className="transition theme-link" href={APP_ROUTES.contact}>
 							Contact
 						</Link>
+						<Link className="transition theme-link" href="/login">
+							Sign In
+						</Link>
+						<Link className="transition theme-link" href="/signup">
+							Sign Up
+						</Link>
 						<button
 							type="button"
 							onClick={toggleTheme}

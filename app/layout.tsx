@@ -1,5 +1,7 @@
 import { FooterComponent } from "@/components/footer/Footer"
 import { HeaderComponent } from "@/components/header/Header"
+import { ErrorBoundary } from "@/components/ui/ErrorBoundary"
+import { ToastProvider } from "@/components/ui/Toast"
 import ThemeProvider from "@/contexts/themes"
 import type { Metadata } from "next"
 import { Geist } from "next/font/google"
@@ -23,13 +25,17 @@ export default function RootLayout({
 	return (
 		<html lang="en" className={`${geistSans.variable} h-full`}>
 			<body className="min-h-screen antialiased">
-				<ThemeProvider>
-					<div className="mx-auto flex min-h-screen max-w-7xl flex-col px-4 py-4 sm:px-6 lg:px-8">
-						<HeaderComponent />
-						<main className="flex-1 px-2 py-4 sm:px-0">{children}</main>
-						<FooterComponent />
-					</div>
-				</ThemeProvider>
+				<ErrorBoundary>
+					<ThemeProvider>
+						<ToastProvider>
+							<div className="mx-auto flex min-h-screen max-w-7xl flex-col px-4 py-4 sm:px-6 lg:px-8">
+								<HeaderComponent />
+								<main className="flex-1 px-2 py-4 sm:px-0">{children}</main>
+								<FooterComponent />
+							</div>
+						</ToastProvider>
+					</ThemeProvider>
+				</ErrorBoundary>
 			</body>
 		</html>
 	)
