@@ -1,8 +1,4 @@
-interface SearchProps {
-	searchQuery: string
-	onSearchChange: (query: string) => void
-	placeholder?: string
-}
+import { SearchProps } from "@/interfaces/common"
 
 export function ProductSearchComponent({
 	searchQuery,

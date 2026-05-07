@@ -1,5 +1,5 @@
 import { CategoryListComponent } from "@/components/category/CategoryList"
-import { categories } from "@/data/category"
+import { getCategories } from "@/lib/category"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -7,5 +7,6 @@ export const metadata: Metadata = {
 }
 
 export default function Category() {
+	const categories = getCategories()
 	return <CategoryListComponent categories={categories} />
 }

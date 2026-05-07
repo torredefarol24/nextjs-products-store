@@ -1,26 +1,18 @@
 "use client"
 
 import { useToast } from "@/components/ui/Toast"
+import { ILoginComponentProps, ILoginFormData } from "@/interfaces/auth"
 import { AppError } from "@/lib/errors"
 import { useState } from "react"
 
-interface LoginFormData {
-	email: string
-	password: string
-}
-
-interface LoginComponentProps {
-	onLogin?: (data: LoginFormData) => void
-}
-
-export default function LoginComponent({ onLogin }: LoginComponentProps) {
+export default function LoginComponent({ onLogin }: ILoginComponentProps) {
 	const { showSuccess, showError } = useToast()
-	const [formData, setFormData] = useState<LoginFormData>({
+	const [formData, setFormData] = useState<ILoginFormData>({
 		email: "",
 		password: "",
 	})
 
-	const [errors, setErrors] = useState<Partial<LoginFormData>>({})
+	const [errors, setErrors] = useState<Partial<ILoginFormData>>({})
 	const [isSubmitting, setIsSubmitting] = useState(false)
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,7 +22,7 @@ export default function LoginComponent({ onLogin }: LoginComponentProps) {
 			[name]: value,
 		}))
 		// Clear error when user starts typing
-		if (errors[name as keyof LoginFormData]) {
+		if (errors[name as keyof ILoginFormData]) {
 			setErrors((prev) => ({
 				...prev,
 				[name]: "",
@@ -39,7 +31,7 @@ export default function LoginComponent({ onLogin }: LoginComponentProps) {
 	}
 
 	const validateForm = (): boolean => {
-		const newErrors: Partial<LoginFormData> = {}
+		const newErrors: Partial<ILoginFormData> = {}
 
 		if (!formData.email.trim()) {
 			newErrors.email = "Email is required"
@@ -65,23 +57,14 @@ export default function LoginComponent({ onLogin }: LoginComponentProps) {
 		setIsSubmitting(true)
 
 		try {
-			// Call the onLogin callback if provided
-			if (onLogin) {
-				await onLogin(formData)
-			}
-
-			// Show success message
+			await onLogin(formData)
 			showSuccess("Login successful! Welcome back!")
-
-			// Reset form on success
 			setFormData({
 				email: "",
 				password: "",
 			})
 		} catch (error) {
 			console.error("Login error:", error)
-
-			// Show error message
 			if (error instanceof AppError) {
 				showError(error.message)
 			} else if (error instanceof Error) {

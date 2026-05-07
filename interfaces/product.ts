@@ -48,13 +48,19 @@ export interface IProduct {
 	images: string[]
 }
 
-export interface ProductFilterComponentProps {
+export interface IProductFilterComponentProps {
 	products: IProduct[]
 	filters: IProductFilterState
 	onFilterChange: (filters: IProductFilterState) => void
 	onClearFilters: () => void
 }
 
-export interface ProductsListComponentProps {
+export interface IProductsListComponentProps {
 	products: IProduct[]
+}
+
+export interface IProductPageProps {
+	params: {
+		id: string
+	}
 }

@@ -1,11 +1,14 @@
 "use client"
 
-import { APP_ROUTES } from "@/config/routes"
+import SignoutButton from "@/components/auth/Signout"
+import { APP_ROUTES } from "@/config/constants"
+import { useAuth } from "@/contexts/auth"
 import { useTheme } from "@/contexts/themes"
 import Link from "next/link"
 
 export function HeaderComponent() {
 	const { theme, toggleTheme } = useTheme()
+	const { user } = useAuth()
 
 	return (
 		<header className="theme-surface border-b px-4 py-4 shadow-sm sm:px-6 lg:px-8">
@@ -29,12 +32,20 @@ export function HeaderComponent() {
 						<Link className="transition theme-link" href={APP_ROUTES.contact}>
 							Contact
 						</Link>
-						<Link className="transition theme-link" href="/login">
-							Sign In
-						</Link>
-						<Link className="transition theme-link" href="/signup">
-							Sign Up
-						</Link>
+						{user ? (
+							<>
+								<Link className="transition theme-link" href={APP_ROUTES.profile}>
+									Profile
+								</Link>
+								<SignoutButton />
+							</>
+						) : (
+							<>
+								<Link className="transition theme-link" href={APP_ROUTES.login}>
+									Sign In
+								</Link>
+							</>
+						)}
 						<button
 							type="button"
 							onClick={toggleTheme}

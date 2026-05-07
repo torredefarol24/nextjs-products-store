@@ -14,6 +14,7 @@ export default function ErrorHandlingDemo() {
 			// Simulate successful operation
 			await new Promise((resolve) => setTimeout(resolve, 1000))
 			showSuccess("Operation completed successfully!")
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		} catch (error) {
 			showError("Unexpected error occurred")
 		} finally {

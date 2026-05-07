@@ -1,6 +1,6 @@
 export function ContactComponent() {
 	return (
-		<section className="mx-auto max-w-3xl rounded-3xl border theme-border theme-surface p-6 shadow-sm sm:p-8">
+		<section className="mx-auto max-w-3xl rounded-3xl  theme-border theme-surface p-6 shadow-sm sm:p-8">
 			<h2 className="text-2xl font-semibold theme-text">Get in touch</h2>
 			<p className="mt-3 theme-text-muted">
 				If you have questions about the store or want to connect, send a message or use one of

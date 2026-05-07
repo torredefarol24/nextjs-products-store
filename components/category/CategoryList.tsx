@@ -3,7 +3,7 @@ import Category from "./Category"
 
 export function CategoryListComponent({ categories }: { categories: ICategory[] }) {
 	return (
-		<section className="mx-auto max-w-6xl rounded-3xl border theme-border theme-surface p-6 shadow-sm sm:p-8">
+		<section className="mx-auto max-w-6xl theme-surface p-6 shadow-sm sm:p-8">
 			<h2 className="text-3xl font-semibold theme-text">Product Categories</h2>
 			<p className="mt-3 theme-text-muted">
 				Browse our curated selection of product categories to find exactly what you&apos;re

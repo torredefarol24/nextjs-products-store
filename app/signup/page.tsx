@@ -1,22 +1,26 @@
 "use client"
 
 import SignupComponent from "@/components/auth/Signup"
+import { APP_ROUTES } from "@/config/constants"
 import { ISignupData } from "@/interfaces/auth"
 import { createUser } from "@/lib/auth"
+import { useRouter } from "next/navigation"
+import { useEffect } from "react"
 
 export default function SignupPage() {
-	async function handleSignup(data: ISignupData) {
-		// Here you would typically send the data to your backend API
-		console.log("Signup data:", data)
+	const router = useRouter()
 
+	useEffect(() => {
+		document.title = "Signup"
+	}, [])
+
+	const handleSignup = async (data: ISignupData) => {
 		await createUser(data)
-
-		// For demo purposes, just log the data
-		// alert(`Welcome ${data.fullName}! Your account has been created.`)
+		router.push(APP_ROUTES.home)
 	}
 
 	return (
-		<div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4 py-12">
+		<div className="min-h-screen flex items-center justify-center theme-surface px-4 py-12">
 			<SignupComponent onSignup={handleSignup} />
 		</div>
 	)
