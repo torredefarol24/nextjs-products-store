@@ -1,4 +1,4 @@
-
+import { APP_ROUTES } from "@/config/constants"
 import { ICategory } from "@/interfaces/category"
 import Link from "next/link"
 
@@ -9,7 +9,7 @@ export default function Category({ categoryId, name, count }: ICategory) {
 			<p className="mt-2 theme-text-muted">{count} products</p>
 			<Link
 				className="mt-4 inline-flex items-center text-sm font-medium theme-link transition"
-				href={`/category/${categoryId}`}
+				href={APP_ROUTES.categoryDetail(categoryId)}
 			>
 				Browse Category →
 			</Link>

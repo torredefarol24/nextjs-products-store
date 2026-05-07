@@ -1,11 +1,11 @@
 "use client"
 
 import { useToast } from "@/components/ui/Toast"
-import { ISignupData, SignupComponentProps } from "@/interfaces/auth"
+import { ISignupComponentProps, ISignupData } from "@/interfaces/auth"
 import { AppError } from "@/lib/errors"
 import { useState } from "react"
 
-export default function SignupComponent({ onSignup }: SignupComponentProps) {
+export default function SignupComponent({ onSignup }: ISignupComponentProps) {
 	const { showSuccess, showError } = useToast()
 	const [formData, setFormData] = useState<ISignupData>({
 		fullName: "",
@@ -23,7 +23,7 @@ export default function SignupComponent({ onSignup }: SignupComponentProps) {
 			...prev,
 			[name]: value,
 		}))
-		// Clear error when user starts typing
+
 		if (errors[name as keyof ISignupData]) {
 			setErrors((prev) => ({
 				...prev,
@@ -71,15 +71,8 @@ export default function SignupComponent({ onSignup }: SignupComponentProps) {
 		setIsSubmitting(true)
 
 		try {
-			// Call the onSignup callback if provided
-			if (onSignup) {
-				await onSignup(formData)
-			}
-
-			// Show success message
+			await onSignup(formData)
 			showSuccess("Account created successfully! Welcome aboard!")
-
-			// Reset form on success
 			setFormData({
 				fullName: "",
 				email: "",

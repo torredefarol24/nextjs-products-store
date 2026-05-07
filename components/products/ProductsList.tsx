@@ -1,13 +1,13 @@
 "use client"
 
-import { IProductFilterState, ProductsListComponentProps } from "@/interfaces/product"
+import { IProductFilterState, IProductsListComponentProps } from "@/interfaces/product"
 import { filterProducts, getDefaultFilters, searchProducts } from "@/lib/productFilters"
 import { useMemo, useState } from "react"
 import { ProductFilterComponent } from "./ProductFilter"
 import { ProductSearchComponent } from "./ProductSearch"
 import { ProductThumbnail } from "./ProductThumbnail"
 
-export default function ProductsListComponent({ products }: ProductsListComponentProps) {
+export default function ProductsListComponent({ products }: IProductsListComponentProps) {
 	const [searchQuery, setSearchQuery] = useState("")
 	const [filters, setFilters] = useState<IProductFilterState>(getDefaultFilters())
 	const [showFilters, setShowFilters] = useState(false)

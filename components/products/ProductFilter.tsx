@@ -1,11 +1,11 @@
-import { IProductFilterState, ProductFilterComponentProps } from "@/interfaces/product"
+import { IProductFilterComponentProps, IProductFilterState } from "@/interfaces/product"
 
 export function ProductFilterComponent({
 	products,
 	filters,
 	onFilterChange,
 	onClearFilters,
-}: ProductFilterComponentProps) {
+}: IProductFilterComponentProps) {
 	// Extract unique values for filter options
 	const categories = [...new Set(products.map((p) => p.category))]
 	const brands = [...new Set(products.map((p) => p.brand))]

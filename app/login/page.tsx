@@ -1,17 +1,27 @@
 "use client"
 
 import LoginComponent from "@/components/auth/Login"
+import { APP_ROUTES } from "@/config/constants"
+import { useAuth } from "@/contexts/auth"
 import { LoginData } from "@/interfaces/auth"
-import { loginUser } from "@/lib/auth"
+import { useRouter } from "next/navigation"
+import { useEffect } from "react"
 
 export default function LoginPage() {
+	const { login } = useAuth()
+	const router = useRouter()
+
+	useEffect(() => {
+		document.title = "Login"
+	}, [])
+
 	const handleLogin = async (data: LoginData) => {
-		const result = await loginUser(data)
-		return result
+		await login(data)
+		router.push(APP_ROUTES.home)
 	}
 
 	return (
-		<div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4 py-12">
+		<div className="min-h-screen flex items-center justify-center theme-surface px-4 py-12">
 			<LoginComponent onLogin={handleLogin} />
 		</div>
 	)

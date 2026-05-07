@@ -54,7 +54,7 @@ export async function createUser(signupData: ISignupData) {
 		}
 
 		return {
-			id: result.insertedId,
+			id: result.insertedId.toString(),
 			fullName,
 			email,
 		}
@@ -90,9 +90,147 @@ export async function loginUser(loginData: LoginData) {
 
 		// Return user data (excluding password)
 		return {
-			id: user._id,
+			id: user._id.toString(),
 			fullName: user.fullName,
 			email: user.email,
 		}
 	}, "loginUser")
+}
+
+export async function updateProfile(
+	userEmail: string,
+	updateData: { fullName: string; email: string },
+) {
+	return withErrorHandling(async () => {
+		const { fullName, email } = updateData
+
+		// Validate input
+		if (!fullName?.trim()) {
+			throw new ValidationError("Full name is required")
+		}
+		if (!email?.trim()) {
+			throw new ValidationError("Email is required")
+		}
+		if (!/\S+@\S+\.\S+/.test(email)) {
+			throw new ValidationError("Please enter a valid email address")
+		}
+
+		const client = await clientPromise
+		const db = client.db(dbName)
+
+		// If email is being changed, check if new email already exists
+		if (email !== userEmail) {
+			const existingUser = await db.collection(TABLES.users).findOne({ email })
+			if (existingUser) {
+				throw new ValidationError("Email is already in use by another account")
+			}
+		}
+
+		// Find the user by current email
+		const user = await db.collection(TABLES.users).findOne({ email: userEmail })
+		if (!user) {
+			throw new ValidationError("User not found")
+		}
+
+		// Update user profile
+		const result = await db.collection(TABLES.users).updateOne(
+			{ email: userEmail },
+			{
+				$set: {
+					fullName,
+					email,
+					updatedAt: new Date(),
+				},
+			},
+		)
+
+		if (!result.acknowledged) {
+			throw new DatabaseError("Failed to update profile")
+		}
+
+		// Return updated user data
+		return {
+			id: user._id.toString(),
+			fullName,
+			email,
+		}
+	}, "updateProfile")
+}
+
+export async function changePassword(
+	userEmail: string,
+	currentPassword: string,
+	newPassword: string,
+	confirmPassword: string,
+) {
+	return withErrorHandling(async () => {
+		if (!currentPassword) {
+			throw new ValidationError("Current password is required")
+		}
+		if (!newPassword) {
+			throw new ValidationError("New password is required")
+		}
+		if (newPassword.length < 6) {
+			throw new ValidationError("New password must be at least 6 characters long")
+		}
+		if (newPassword !== confirmPassword) {
+			throw new ValidationError("New password and confirmation do not match")
+		}
+
+		const client = await clientPromise
+		const db = client.db(dbName)
+
+		const user = await db.collection(TABLES.users).findOne({ email: userEmail })
+		if (!user) {
+			throw new ValidationError("User not found")
+		}
+
+		const isValidPassword = await bcrypt.compare(currentPassword, user.password)
+		if (!isValidPassword) {
+			throw new AuthenticationError("Current password is incorrect")
+		}
+
+		const salt = await bcrypt.genSalt(10)
+		const hashedPassword = await bcrypt.hash(newPassword, salt)
+
+		const result = await db.collection(TABLES.users).updateOne(
+			{ email: userEmail },
+			{
+				$set: {
+					password: hashedPassword,
+					updatedAt: new Date(),
+				},
+			},
+		)
+
+		if (!result.acknowledged) {
+			throw new DatabaseError("Failed to update password")
+		}
+
+		return {
+			message: "Password updated successfully",
+		}
+	}, "changePassword")
+}
+
+export async function getUserByEmail(email: string) {
+	return withErrorHandling(async () => {
+		if (!email?.trim()) {
+			throw new ValidationError("Email is required")
+		}
+
+		const client = await clientPromise
+		const db = client.db(dbName)
+
+		const user = await db.collection(TABLES.users).findOne({ email })
+		if (!user) {
+			throw new ValidationError("User not found")
+		}
+
+		return {
+			id: user._id.toString(),
+			fullName: user.fullName,
+			email: user.email,
+		}
+	}, "getUserByEmail")
 }

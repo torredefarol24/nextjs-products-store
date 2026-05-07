@@ -8,3 +8,9 @@ export interface ICategory {
 export interface ICategoryDetailComponentProps {
 	categoryId: number
 }
+
+export interface ICategoryPageProps {
+	params: {
+		id: string
+	}
+}
