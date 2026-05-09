@@ -4,7 +4,7 @@ declare global {
 	var _mongoClientPromise: Promise<MongoClient> | undefined
 }
 
-const env = process.env.NODE_ENV
+const env = process.env.APP_ENV
 
 const uri = env === "development" ? process.env.MONGODB_URI_DEV : process.env.MONGODB_URI_LCL
 
