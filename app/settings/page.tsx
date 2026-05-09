@@ -1,6 +1,7 @@
 "use client"
 
 import SettingsComponent from "@/components/settings/Settings"
+import Loader from "@/components/ui/Loader"
 import { ROUTES } from "@/config/constants"
 import { useAuth } from "@/contexts/auth"
 import { IChangePasswordData } from "@/interfaces/auth"
@@ -14,14 +15,12 @@ export default function SettingsPage() {
 	const router = useRouter()
 
 	useEffect(() => {
-		document.title = "Profile"
+		document.title = "Settings"
 	}, [])
 
 	if (loading) {
 		return (
-			<div className="min-h-screen flex items-center justify-center bg-gray-50 theme-surface">
-				<p className="theme-text">Loading profile...</p>
-			</div>
+			<Loader message="Loading profile..." fullScreen className="bg-gray-50 theme-surface" />
 		)
 	}
 

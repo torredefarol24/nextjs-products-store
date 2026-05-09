@@ -1,5 +1,6 @@
 "use client"
 
+import Loader from "@/components/ui/Loader"
 import { ROUTES } from "@/config/constants"
 import { useAuth } from "@/contexts/auth"
 import { IOrder } from "@/interfaces/order"
@@ -30,13 +31,7 @@ export default function DashboardComponent({ orders }: { orders: IOrder[] }) {
 	)
 
 	if (loading) {
-		return (
-			<div className="min-h-screen theme-surface flex items-center justify-center p-6">
-				<div className="rounded-3xl border border-gray-200 bg-white p-10 text-center shadow-sm">
-					<p className="text-lg font-medium theme-text">Loading your dashboard…</p>
-				</div>
-			</div>
-		)
+		return <Loader message="Loading your dashboard…" fullScreen className="theme-surface p-6" />
 	}
 
 	if (!user) {

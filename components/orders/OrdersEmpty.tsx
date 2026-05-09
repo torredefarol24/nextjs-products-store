@@ -22,7 +22,7 @@ export function OrderEmpty() {
 				</div>
 				<h2 className="text-2xl font-bold theme-text mb-2">No Orders Yet</h2>
 				<p className="theme-text-muted mb-6">
-					You haven't placed any orders yet. Start shopping to see your orders here!
+					You haven&apos;t placed any orders yet. Start shopping to see your orders here!
 				</p>
 				<Link
 					href={ROUTES.products}

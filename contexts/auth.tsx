@@ -62,7 +62,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		return result.user
 	}
 
-	const logout = () => {
+	const logout = async () => {
+		const response = await fetch(APIS.INTERNAL.logout, {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+		})
+
+		const result = await response.json()
+		if (!response.ok) {
+			throw new Error(result.message || "Logout failed")
+		}
+
 		setUser(null)
 		window.localStorage.removeItem("authEmail")
 	}

@@ -3,11 +3,9 @@
 import SignoutButton from "@/components/auth/Signout"
 import { ROUTES } from "@/config/constants"
 import { useAuth } from "@/contexts/auth"
-import { useTheme } from "@/contexts/themes"
 import Link from "next/link"
 
 export function HeaderComponent() {
-	const { theme, toggleTheme } = useTheme()
 	const { user } = useAuth()
 
 	return (
@@ -45,9 +43,6 @@ export function HeaderComponent() {
 
 								<Link className="transition theme-link" href={ROUTES.settings}>
 									Settings
-								</Link>
-								<Link className="transition theme-link" href={ROUTES.contact}>
-									Contact
 								</Link>
 								<SignoutButton />
 							</>
