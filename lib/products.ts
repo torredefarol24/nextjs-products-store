@@ -52,3 +52,32 @@ export async function getProductDetailsById(productId: number) {
 		return product
 	}, "getProductDetailsById")
 }
+
+export async function getProductsByCategory(category: string) {
+	return withErrorHandling(async () => {
+		if (!category?.trim()) {
+			throw new ValidationError("Category is required")
+		}
+
+		const response = await fetch(
+			`${ENDPOINTS.productsByCategory(encodeURIComponent(category))}`,
+			{
+				next: { revalidate: 3600 }, // Cache for 1 hour
+			},
+		)
+
+		if (!response.ok) {
+			throw new NetworkError(
+				`Failed to fetch products by category: ${response.status} ${response.statusText}`,
+			)
+		}
+
+		const data = await response.json()
+
+		if (!data || !Array.isArray(data.products)) {
+			throw new ValidationError("Invalid response format from products API")
+		}
+
+		return data.products
+	}, "getProductsByCategory")
+}

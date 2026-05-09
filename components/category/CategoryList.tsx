@@ -3,7 +3,7 @@ import Category from "./Category"
 
 export function CategoryListComponent({ categories }: { categories: ICategory[] }) {
 	return (
-		<section className="mx-auto max-w-6xl theme-surface p-6 shadow-sm sm:p-8">
+		<div className="space-y-6">
 			<h2 className="text-3xl font-semibold theme-text">Product Categories</h2>
 			<p className="mt-3 theme-text-muted">
 				Browse our curated selection of product categories to find exactly what you&apos;re
@@ -16,7 +16,7 @@ export function CategoryListComponent({ categories }: { categories: ICategory[] 
 						key={idx}
 						categoryId={category.categoryId}
 						name={category.name}
-						count={category.count}
+						slug={category.slug}
 					/>
 				))}
 			</div>
@@ -28,6 +28,6 @@ export function CategoryListComponent({ categories }: { categories: ICategory[] 
 					our support team for personalized recommendations.
 				</p>
 			</div>
-		</section>
+		</div>
 	)
 }
