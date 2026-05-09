@@ -7,7 +7,10 @@ import { ProductFilterComponent } from "./ProductFilter"
 import { ProductSearchComponent } from "./ProductSearch"
 import { ProductThumbnail } from "./ProductThumbnail"
 
-export default function ProductsListComponent({ products }: IProductsListComponentProps) {
+export default function ProductsListComponent({
+	products,
+	loading = false,
+}: IProductsListComponentProps & { loading?: boolean }) {
 	const [searchQuery, setSearchQuery] = useState("")
 	const [filters, setFilters] = useState<IProductFilterState>(getDefaultFilters())
 	const [showFilters, setShowFilters] = useState(false)
@@ -92,7 +95,26 @@ export default function ProductsListComponent({ products }: IProductsListCompone
 			</div>
 
 			{/* Products Grid */}
-			{filteredProducts.length === 0 ? (
+			{loading ? (
+				<div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+					{[...Array(8)].map((_, i) => (
+						<div key={i} className="animate-pulse">
+							<div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+								<div className="aspect-square bg-gray-200 dark:bg-gray-700"></div>
+								<div className="p-4 space-y-3">
+									<div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
+									<div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+									<div className="flex justify-between items-center">
+										<div className="h-5 bg-gray-200 dark:bg-gray-700 rounded w-16"></div>
+										<div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-12"></div>
+									</div>
+									<div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-full"></div>
+								</div>
+							</div>
+						</div>
+					))}
+				</div>
+			) : filteredProducts.length === 0 ? (
 				<div className="text-center py-12">
 					<div className="text-6xl mb-4">🔍</div>
 					<h3 className="text-xl font-semibold theme-text mb-2">No products found</h3>

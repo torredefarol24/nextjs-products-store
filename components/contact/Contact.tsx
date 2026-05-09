@@ -10,33 +10,35 @@ export function ContactComponent() {
 			<div className="mt-6 grid gap-4 sm:grid-cols-2">
 				<div className="rounded-2xl theme-border theme-surface p-4">
 					<p className="text-sm font-semibold theme-text">Email</p>
-					<a className="mt-2 block theme-link transition" href="mailto:hello@example.com">
-						hello@example.com
-					</a>
-				</div>
-
-				<div className="rounded-2xl theme-border theme-surface p-4">
-					<p className="text-sm font-semibold theme-text">Phone</p>
-					<a className="mt-2 block theme-link transition" href="tel:+1234567890">
-						+1 (234) 567-890
+					<a
+						className="mt-2 block theme-link transition"
+						href="mailto:burningraven06@gmail.com"
+					>
+						burningraven06@yandex.com
 					</a>
 				</div>
 			</div>
 
-			<div className="mt-6 space-y-3 rounded-2xl theme-border theme-surface p-4">
-				<p className="text-sm font-semibold theme-text">Message</p>
-				<p className="theme-text-muted">
-					You can also reach out through social media or send a quick note to start a
-					conversation.
+			<div className="mt-6 rounded-2xl theme-border theme-surface p-4">
+				<p className="text-sm font-semibold theme-text">Support me</p>
+				<p className="mt-2 theme-text-muted">
+					If you enjoy the project and want to support future improvements, consider a small tip
+					or share this store with your network.
 				</p>
-				<ul className="space-y-2 theme-text-muted">
-					<li>
-						LinkedIn: <span className="font-medium theme-text">linkedin.com/in/yourname</span>
-					</li>
-					<li>
-						Twitter: <span className="font-medium theme-text">@yourhandle</span>
-					</li>
-				</ul>
+				<div className="mt-4 grid gap-3 sm:grid-cols-2">
+					<a
+						href="#"
+						className="inline-flex items-center justify-center rounded-xl border border-transparent bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-700"
+					>
+						Buy me a coffee
+					</a>
+					<a
+						href="#"
+						className="inline-flex items-center justify-center rounded-xl border border-slate-700 bg-transparent px-4 py-2 text-sm font-semibold theme-text transition hover:bg-slate-100"
+					>
+						Share the store
+					</a>
+				</div>
 			</div>
 		</section>
 	)

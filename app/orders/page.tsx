@@ -22,7 +22,7 @@ export default function OrdersPage() {
 			}
 		}
 		fetchOrders()
-	}, [user, orders.length]) // Add orders.length to the dependency array to refetch when orders change
+	}, [user, orders.length])
 
-	return orders.length > 0 && <OrdersListComponent orders={orders} />
+	return <OrdersListComponent orders={orders} />
 }
