@@ -26,6 +26,7 @@ export const APIS = {
 		getUser: "/api/auth/user",
 		getOrders: "/api/orders/retrieve",
 		createOrder: "/api/orders/create",
+		deleteOrder: "/api/orders/delete",
 		getProducts: "/api/products/fetch",
 	},
 	ENDPOINTS: {
