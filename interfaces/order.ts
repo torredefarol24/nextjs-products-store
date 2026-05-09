@@ -23,3 +23,17 @@ export interface IOrderData {
 		price: number
 	}
 }
+
+export interface IDeleteOrderModalProps {
+	cancelDelete: () => void
+	handleDeleteOrder: (orderId: string) => Promise<void>
+	showDeleteConfirm: string | null
+	deletingOrderId: string | null
+}
+
+export interface IOrderTableProps {
+	orders: IOrder[]
+	sortedOrders: IOrder[]
+	deletingOrderId: string | null
+	confirmDelete: (orderId: string) => void
+}

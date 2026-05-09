@@ -17,7 +17,7 @@ export default function LoginPage() {
 
 	const handleLogin = async (data: LoginData) => {
 		await login(data)
-		router.push(APP_ROUTES.home)
+		router.push(APP_ROUTES.dashboard)
 	}
 
 	return (

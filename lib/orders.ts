@@ -40,9 +40,7 @@ export async function getUserOrders(userId: string) {
 			},
 		}))
 
-		return {
-			orders: ordersWithProducts,
-		}
+		return ordersWithProducts
 	}, "getUserOrders")
 }
 
@@ -83,7 +81,7 @@ export async function createOrder(userId: string, data: IOrderData) {
 		const result = await db.collection(TABLES.orders).insertOne(newOrder)
 
 		if (!result.acknowledged) {
-			throw new Error("Failed to create order")
+			throw new DatabaseError("Failed to create order")
 		}
 
 		return {

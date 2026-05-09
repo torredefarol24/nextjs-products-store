@@ -1,6 +1,7 @@
 "use client"
 
 import { useToast } from "@/components/ui/Toast"
+import { useTheme } from "@/contexts/themes"
 import { IChangePasswordData } from "@/interfaces/auth"
 import { IUserProfileComponentProps, IUserProfileData } from "@/interfaces/profile"
 import Image from "next/image"
@@ -10,9 +11,11 @@ export default function UserProfileComponent({
 	user,
 	onUpdate,
 	onPasswordChange,
+	onDeleteAccount,
 	isEditing: initialIsEditing = false,
 }: IUserProfileComponentProps) {
 	const { showSuccess, showError } = useToast()
+	const { theme, toggleTheme } = useTheme()
 	const [isEditing, setIsEditing] = useState(initialIsEditing)
 	const [formData, setFormData] = useState<IUserProfileData>(user)
 	const [isSaving, setIsSaving] = useState(false)
@@ -22,6 +25,8 @@ export default function UserProfileComponent({
 		confirmPassword: "",
 	})
 	const [isPasswordSaving, setIsPasswordSaving] = useState(false)
+	const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+	const [isDeleting, setIsDeleting] = useState(false)
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target
@@ -121,6 +126,29 @@ export default function UserProfileComponent({
 		setPasswordData({ currentPassword: "", newPassword: "", confirmPassword: "" })
 	}
 
+	const handleDeleteAccount = async () => {
+		if (!onDeleteAccount) {
+			showError("Account deletion is not available")
+			return
+		}
+
+		setIsDeleting(true)
+
+		try {
+			await onDeleteAccount()
+			showSuccess("Account deleted successfully!")
+			setShowDeleteConfirm(false)
+		} catch {
+			showError("Failed to delete account")
+		} finally {
+			setIsDeleting(false)
+		}
+	}
+
+	const handleDeleteCancel = () => {
+		setShowDeleteConfirm(false)
+	}
+
 	const avatarSrc =
 		formData.avatar ||
 		`https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(
@@ -133,8 +161,9 @@ export default function UserProfileComponent({
 	}
 
 	return (
-		<div className="max-w-7xl mx-auto">
-			<div className="grid gap-8 xl:grid-cols-[1.25fr_0.95fr]">
+		<div className="max-w-4xl mx-auto">
+			<div className="space-y-8">
+				{/* User Profile Section */}
 				<div className="rounded-3xl border theme-border theme-surface p-8 shadow-sm">
 					{/* Header */}
 					<div className="flex items-center justify-between mb-8">
@@ -229,28 +258,25 @@ export default function UserProfileComponent({
 							</div>
 
 							{/* Additional Info */}
-							<div className="flex justify-between items-center">
-								<div className="pt-4 border-t theme-border">
-									<p className="text-sm theme-text-muted">
-										Last updated: {new Date().toLocaleDateString()}
-									</p>
-								</div>
+							<div className="flex justify-between items-center pt-4 border-t theme-border">
+								<p className="text-sm theme-text-muted">
+									Last updated: {new Date().toLocaleDateString()}
+								</p>
 
-								<div className="pt-4 border-t theme-border">
-									{!isEditing && (
-										<button
-											onClick={() => setIsEditing(true)}
-											className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition"
-										>
-											Edit Profile
-										</button>
-									)}
-								</div>
+								{!isEditing && (
+									<button
+										onClick={() => setIsEditing(true)}
+										className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition"
+									>
+										Edit Profile
+									</button>
+								)}
 							</div>
 						</div>
 					)}
 				</div>
 
+				{/* Change Password Section */}
 				<div className="rounded-3xl border theme-border theme-surface p-8 shadow-sm">
 					<div className="flex items-center justify-between mb-8">
 						<h2 className="text-3xl font-bold theme-text">Change Password</h2>
@@ -322,6 +348,82 @@ export default function UserProfileComponent({
 							</button>
 						</div>
 					</div>
+				</div>
+
+				{/* Theme Toggle Section */}
+				<div className="rounded-3xl border theme-border theme-surface p-8 shadow-sm">
+					<div className="flex items-center justify-between mb-8">
+						<h2 className="text-3xl font-bold theme-text">Theme Settings</h2>
+					</div>
+
+					<div className="space-y-6">
+						<div className="flex items-center justify-between p-4 theme-surfacerounded-xl">
+							<div>
+								<p className="text-lg font-medium theme-text">Set your preffered theme</p>
+								<p className="text-sm theme-text-muted">
+									Current theme: <span className="font-medium capitalize">{theme}</span>
+								</p>
+							</div>
+							<button
+								onClick={toggleTheme}
+								className={`relative inline-flex h-8 w-14 items-center rounded-full transition-colors ${
+									theme === "dark" ? "bg-blue-600" : "bg-gray-300"
+								}`}
+							>
+								<span
+									className={`inline-block h-6 w-6 transform rounded-full bg-white transition-transform ${
+										theme === "dark" ? "translate-x-7" : "translate-x-1"
+									}`}
+								/>
+							</button>
+						</div>
+					</div>
+				</div>
+
+				{/* Delete Account Section */}
+				<div className="rounded-3xl border theme-border theme-surface p-8 shadow-sm">
+					<div className="flex items-center justify-between mb-8">
+						<h2 className="text-3xl font-bold theme-text">Delete Account</h2>
+					</div>
+
+					{!showDeleteConfirm ? (
+						<div className="space-y-6">
+							<p className="text-base theme-text-muted">
+								This action cannot be undone. Once you delete your account, all your data will
+								be permanently removed.
+							</p>
+							<button
+								onClick={() => setShowDeleteConfirm(true)}
+								className="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-4 rounded-lg transition"
+							>
+								Delete My Account
+							</button>
+						</div>
+					) : (
+						<div className="space-y-6">
+							<div className="p-4 bg-red-100 dark:bg-red-900 rounded-xl border border-red-300 dark:border-red-700">
+								<p className="text-base font-medium theme-text">
+									Are you sure you want to delete your account? This action is irreversible.
+								</p>
+							</div>
+							<div className="flex gap-3">
+								<button
+									onClick={handleDeleteAccount}
+									disabled={isDeleting}
+									className="flex-1 bg-red-600 hover:bg-red-700 disabled:bg-red-400 text-white font-medium py-3 px-4 rounded-lg transition"
+								>
+									{isDeleting ? "Deleting..." : "Confirm Delete"}
+								</button>
+								<button
+									onClick={handleDeleteCancel}
+									disabled={isDeleting}
+									className="flex-1 bg-gray-400 hover:bg-gray-500 disabled:bg-gray-300 text-white font-medium py-3 px-4 rounded-lg transition"
+								>
+									Cancel
+								</button>
+							</div>
+						</div>
+					)}
 				</div>
 			</div>
 		</div>

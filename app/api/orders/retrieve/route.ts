@@ -5,9 +5,8 @@ import { NextResponse } from "next/server"
 export async function POST(request: Request) {
 	try {
 		const body = await request.json()
-		const userId = body.userId
-		const orders = await getUserOrders(userId)
-		return NextResponse.json({ orders })
+		const orders = await getUserOrders(body.userId)
+		return NextResponse.json(orders)
 	} catch (error) {
 		console.error("Get orders API error:", error)
 		if (error instanceof AppError) {

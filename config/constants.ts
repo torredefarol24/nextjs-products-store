@@ -17,6 +17,7 @@ export const APP_ROUTES = {
 	contact: "/contact",
 	category: "/category",
 	orders: "/orders",
+	dashboard: "/dashboard",
 	productDetail: (id: number) => `/products/${id}`,
 	productByCategory: (category: string) => `/products/category/${category}`,
 	profile: "/profile",
@@ -32,4 +33,5 @@ export const APP_INTERNAL_APIS = {
 	getUser: "/api/auth/user",
 	getOrders: "/api/orders/retrieve",
 	createOrder: "/api/orders/create",
+	getProducts: "/api/products/fetch",
 }
