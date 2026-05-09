@@ -1,5 +1,5 @@
 export interface IOrder {
-	_id?: any
+	id: string
 	userId: string
 	product: {
 		id: number
