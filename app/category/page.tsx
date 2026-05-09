@@ -6,7 +6,7 @@ export const metadata: Metadata = {
 	title: "Category",
 }
 
-export default function Category() {
-	const categories = getCategories()
+export default async function CategoryPage() {
+	const categories = await getCategories()
 	return <CategoryListComponent categories={categories} />
 }

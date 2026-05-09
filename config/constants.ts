@@ -1,5 +1,8 @@
 export const ENDPOINTS = {
 	products: "https://dummyjson.com/products",
+	categories: "https://dummyjson.com/products/categories",
+	productsByCategory: (category: string) =>
+		`https://dummyjson.com/products/category/${category}`,
 }
 
 export const TABLES = {
@@ -11,8 +14,8 @@ export const APP_ROUTES = {
 	products: "/products",
 	contact: "/contact",
 	category: "/category",
-	categoryDetail: (id: number) => `/category/${id}`,
 	productDetail: (id: number) => `/products/${id}`,
+	productByCategory: (category: string) => `/products/category/${category}`,
 	profile: "/profile",
 	login: "/login",
 	signup: "/signup",

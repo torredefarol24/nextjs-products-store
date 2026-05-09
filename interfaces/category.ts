@@ -1,16 +1,15 @@
 export interface ICategory {
 	categoryId: number
 	name: string
-	count: number
-	subHeading?: string
+	slug: string
 }
 
 export interface ICategoryDetailComponentProps {
 	categoryId: number
 }
 
-export interface ICategoryPageProps {
+export interface IProductByCategoryPageProps {
 	params: {
-		id: string
+		slug: string
 	}
 }

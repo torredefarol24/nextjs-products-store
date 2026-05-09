@@ -1,11 +1,26 @@
-import { categories } from "@/data/category"
+import { ENDPOINTS } from "@/config/constants"
 import { ICategory } from "@/interfaces/category"
+import { NetworkError, ValidationError } from "./errors"
+import { withErrorHandling } from "./errorUtils"
 
-export function getCategoryDetailsById(categoryId: number): ICategory | null {
-	const category = categories.find((cat) => cat.categoryId === categoryId)
-	return category || null
-}
+export async function getCategories(): Promise<ICategory[]> {
+	return withErrorHandling(async () => {
+		const response = await fetch(ENDPOINTS.categories, {
+			next: { revalidate: 3600 }, // Cache for 1 hour
+		})
 
-export function getCategories(): ICategory[] {
-	return categories
+		if (!response.ok) {
+			throw new NetworkError(
+				`Failed to fetch categories: ${response.status} ${response.statusText}`,
+			)
+		}
+
+		const data = await response.json()
+
+		if (!data || !Array.isArray(data)) {
+			throw new ValidationError("Invalid response format from categories API")
+		}
+
+		return data
+	}, "getCategories")
 }
