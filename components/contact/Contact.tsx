@@ -14,7 +14,7 @@ export function ContactComponent() {
 						className="mt-2 block theme-link transition"
 						href="mailto:burningraven06@gmail.com"
 					>
-						burningraven06@yandex.com
+						burningraven06@gmail.com
 					</a>
 				</div>
 			</div>

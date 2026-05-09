@@ -4,7 +4,10 @@ declare global {
 	var _mongoClientPromise: Promise<MongoClient> | undefined
 }
 
-const uri = process.env.MONGODB_URI
+const env = process.env.NODE_ENV
+
+const uri = env === "development" ? process.env.MONGODB_URI_DEV : process.env.MONGODB_URI_LCL
+
 const options = {}
 
 if (!uri) {
@@ -13,6 +16,6 @@ if (!uri) {
 
 const client = new MongoClient(uri, options)
 const clientPromise = client.connect()
-const dbName = uri.split("/").pop() || "test"
+const dbName = uri.split("/").pop()
 
 export { clientPromise, dbName }

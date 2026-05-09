@@ -1,5 +1,6 @@
 "use client"
 
+import { APIS } from "@/config/constants"
 import { useAuth } from "@/contexts/auth"
 import { IOrder } from "@/interfaces/order"
 import { useState } from "react"
@@ -53,7 +54,7 @@ export default function OrdersListComponent({ orders }: { orders: IOrder[] }) {
 
 		setDeletingOrderId(orderId)
 		try {
-			const response = await fetch("/api/orders/delete", {
+			const response = await fetch(APIS.INTERNAL.deleteOrder, {
 				method: "DELETE",
 				headers: {
 					"Content-Type": "application/json",

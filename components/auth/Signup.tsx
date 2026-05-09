@@ -1,7 +1,7 @@
 "use client"
 
-import { useToast } from "@/components/ui/Toast"
 import { AppError } from "@/config/errors"
+import { useToast } from "@/contexts/toasts"
 import { ISignupComponentProps, ISignupData } from "@/interfaces/auth"
 import { useState } from "react"
 
