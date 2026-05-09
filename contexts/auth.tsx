@@ -1,7 +1,7 @@
 "use client"
 
-import { APP_INTERNAL_APIS } from "@/config/constants"
-import { IAuthContextType, IChangePasswordData, IUser, LoginData } from "@/interfaces/auth"
+import { APIS } from "@/config/constants"
+import { IAuthContextType, IChangePasswordData, ILoginData, IUser } from "@/interfaces/auth"
 import { createContext, ReactNode, useContext, useEffect, useState } from "react"
 
 const AuthContext = createContext<IAuthContextType | undefined>(undefined)
@@ -19,7 +19,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 			}
 
 			try {
-				const response = await fetch(APP_INTERNAL_APIS.getUser, {
+				const response = await fetch(APIS.INTERNAL.getUser, {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({ email }),
@@ -45,8 +45,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		restoreSession()
 	}, [])
 
-	const login = async (data: LoginData) => {
-		const response = await fetch(APP_INTERNAL_APIS.login, {
+	const login = async (data: ILoginData) => {
+		const response = await fetch(APIS.INTERNAL.login, {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(data),
@@ -72,7 +72,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 			throw new Error("Not logged in")
 		}
 
-		const response = await fetch(APP_INTERNAL_APIS.updateProfile, {
+		const response = await fetch(APIS.INTERNAL.updateProfile, {
 			method: "PUT",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({
@@ -97,7 +97,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 			throw new Error("Not logged in")
 		}
 
-		const response = await fetch(APP_INTERNAL_APIS.changePassword, {
+		const response = await fetch(APIS.INTERNAL.changePassword, {
 			method: "PUT",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({

@@ -1,7 +1,7 @@
 export interface ICategory {
 	categoryId: number
 	name: string
-	slug: string
+	categName: string
 }
 
 export interface ICategoryDetailComponentProps {
@@ -10,6 +10,6 @@ export interface ICategoryDetailComponentProps {
 
 export interface IProductByCategoryPageProps {
 	params: {
-		slug: string
+		categName: string
 	}
 }

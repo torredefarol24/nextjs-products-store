@@ -1,19 +1,19 @@
 "use client"
 
-import { useToast } from "@/components/ui/Toast"
 import { useTheme } from "@/contexts/themes"
+import { useToast } from "@/contexts/toasts"
 import { IChangePasswordData } from "@/interfaces/auth"
-import { IUserProfileComponentProps, IUserProfileData } from "@/interfaces/profile"
+import { ISettingsComponentProps, IUserProfileData } from "@/interfaces/settings"
 import Image from "next/image"
 import { useState } from "react"
 
-export default function UserProfileComponent({
+export default function SettingsComponent({
 	user,
 	onUpdate,
 	onPasswordChange,
 	onDeleteAccount,
 	isEditing: initialIsEditing = false,
-}: IUserProfileComponentProps) {
+}: ISettingsComponentProps) {
 	const { showSuccess, showError } = useToast()
 	const { theme, toggleTheme } = useTheme()
 	const [isEditing, setIsEditing] = useState(initialIsEditing)

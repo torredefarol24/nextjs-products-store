@@ -1,6 +1,6 @@
 import OrdersListComponent from "@/components/orders/OrderList"
-import { getCurrentUser } from "@/lib/auth"
 import { getUserOrders } from "@/lib/orders"
+import { getCurrentUser } from "@/utils/auth"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {

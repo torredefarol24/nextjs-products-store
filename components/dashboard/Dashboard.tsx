@@ -1,6 +1,6 @@
 "use client"
 
-import { APP_ROUTES } from "@/config/constants"
+import { ROUTES } from "@/config/constants"
 import { useAuth } from "@/contexts/auth"
 import { IOrder } from "@/interfaces/order"
 import Link from "next/link"
@@ -50,7 +50,7 @@ export default function DashboardComponent({ orders }: { orders: IOrder[] }) {
 						This dashboard is available only to signed-in customers.
 					</p>
 					<Link
-						href={APP_ROUTES.login}
+						href={ROUTES.login}
 						className="inline-flex rounded-full bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
 					>
 						Sign In
@@ -78,13 +78,13 @@ export default function DashboardComponent({ orders }: { orders: IOrder[] }) {
 					</div>
 					<div className="flex flex-wrap gap-3">
 						<Link
-							href={APP_ROUTES.orders}
+							href={ROUTES.orders}
 							className="inline-flex items-center justify-center rounded-2xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
 						>
 							View Orders
 						</Link>
 						<Link
-							href={APP_ROUTES.profile}
+							href={ROUTES.settings}
 							className="inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-transparent px-4 py-2 text-sm font-semibold theme-text transition hover:bg-slate-100"
 						>
 							Manage Profile
@@ -157,13 +157,13 @@ export default function DashboardComponent({ orders }: { orders: IOrder[] }) {
 					</p>
 					<div className="mt-6 flex flex-col gap-3 sm:flex-row">
 						<Link
-							href={APP_ROUTES.products}
+							href={ROUTES.products}
 							className="inline-flex items-center justify-center rounded-2xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800"
 						>
 							Browse products
 						</Link>
 						<Link
-							href={APP_ROUTES.orders}
+							href={ROUTES.orders}
 							className="inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-transparent px-4 py-2 text-sm font-semibold theme-text transition hover:bg-slate-100"
 						>
 							View orders

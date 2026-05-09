@@ -1,104 +1,9 @@
 "use client"
 
-import { ToastMessage } from "@/lib/errors"
-import { createContext, ReactNode, useCallback, useContext, useState } from "react"
+import { useToast } from "@/contexts/toasts"
+import { IToastProps } from "@/interfaces/common"
 
-interface ToastContextType {
-	toasts: ToastMessage[]
-	addToast: (message: Omit<ToastMessage, "id">) => void
-	removeToast: (id: string) => void
-	showSuccess: (message: string, duration?: number) => void
-	showError: (message: string, duration?: number) => void
-	showWarning: (message: string, duration?: number) => void
-	showInfo: (message: string, duration?: number) => void
-}
-
-const ToastContext = createContext<ToastContextType | undefined>(undefined)
-
-export function useToast() {
-	const context = useContext(ToastContext)
-	if (!context) {
-		throw new Error("useToast must be used within a ToastProvider")
-	}
-	return context
-}
-
-interface ToastProviderProps {
-	children: ReactNode
-}
-
-export function ToastProvider({ children }: ToastProviderProps) {
-	const [toasts, setToasts] = useState<ToastMessage[]>([])
-
-	const addToast = useCallback((toast: Omit<ToastMessage, "id">) => {
-		const id = Math.random().toString(36).substring(2, 9)
-		const newToast: ToastMessage = {
-			...toast,
-			id,
-			duration: toast.duration ?? 5000,
-		}
-
-		setToasts((prev) => [...prev, newToast])
-
-		// Auto remove toast after duration
-		setTimeout(() => {
-			// eslint-disable-next-line react-hooks/immutability
-			removeToast(id)
-		}, newToast.duration)
-	}, [])
-
-	// eslint-disable-next-line react-hooks/preserve-manual-memoization
-	const removeToast = useCallback((id: string) => {
-		setToasts((prev) => prev.filter((toast) => toast.id !== id))
-	}, [])
-
-	const showSuccess = useCallback(
-		(message: string, duration?: number) => {
-			addToast({ type: "success", message, duration })
-		},
-		[addToast],
-	)
-
-	const showError = useCallback(
-		(message: string, duration?: number) => {
-			addToast({ type: "error", message, duration })
-		},
-		[addToast],
-	)
-
-	const showWarning = useCallback(
-		(message: string, duration?: number) => {
-			addToast({ type: "warning", message, duration })
-		},
-		[addToast],
-	)
-
-	const showInfo = useCallback(
-		(message: string, duration?: number) => {
-			addToast({ type: "info", message, duration })
-		},
-		[addToast],
-	)
-
-	return (
-		<ToastContext.Provider
-			value={{
-				toasts,
-				addToast,
-				removeToast,
-				showSuccess,
-				showError,
-				showWarning,
-				showInfo,
-			}}
-		>
-			{children}
-			<ToastContainer />
-		</ToastContext.Provider>
-	)
-}
-
-function ToastContainer() {
+export function ToastContainer() {
 	const { toasts, removeToast } = useToast()
 
 	return (
@@ -110,12 +15,7 @@ function ToastContainer() {
 	)
 }
 
-interface ToastProps {
-	toast: ToastMessage
-	onRemove: (id: string) => void
-}
-
-function Toast({ toast, onRemove }: ToastProps) {
+export function Toast({ toast, onRemove }: IToastProps) {
 	const getToastStyles = () => {
 		switch (toast.type) {
 			case "success":

@@ -1,12 +1,12 @@
-import { ENDPOINTS } from "@/config/constants"
+import { APIS } from "@/config/constants"
 import { ICategory } from "@/interfaces/category"
-import { NetworkError, ValidationError } from "./errors"
-import { withErrorHandling } from "./errorUtils"
+import { NetworkError, ValidationError } from "../config/errors"
+import { withErrorHandling } from "../utils/errorHandler"
 
 export async function getCategories(): Promise<ICategory[]> {
 	return withErrorHandling(async () => {
-		const response = await fetch(ENDPOINTS.categories, {
-			next: { revalidate: 3600 }, // Cache for 1 hour
+		const response = await fetch(APIS.ENDPOINTS.getCategories, {
+			next: { revalidate: 3600 },
 		})
 
 		if (!response.ok) {

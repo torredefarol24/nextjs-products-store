@@ -1,7 +1,7 @@
 "use client"
 
 import SignupComponent from "@/components/auth/Signup"
-import { APP_ROUTES } from "@/config/constants"
+import { ROUTES } from "@/config/constants"
 import { ISignupData } from "@/interfaces/auth"
 import { createUser } from "@/lib/auth"
 import { useRouter } from "next/navigation"
@@ -16,7 +16,7 @@ export default function SignupPage() {
 
 	const handleSignup = async (data: ISignupData) => {
 		await createUser(data)
-		router.push(APP_ROUTES.home)
+		router.push(ROUTES.home)
 	}
 
 	return (

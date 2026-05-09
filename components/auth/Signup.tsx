@@ -1,8 +1,8 @@
 "use client"
 
 import { useToast } from "@/components/ui/Toast"
+import { AppError } from "@/config/errors"
 import { ISignupComponentProps, ISignupData } from "@/interfaces/auth"
-import { AppError } from "@/lib/errors"
 import { useState } from "react"
 
 export default function SignupComponent({ onSignup }: ISignupComponentProps) {
