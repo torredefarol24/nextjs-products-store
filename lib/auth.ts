@@ -6,6 +6,7 @@ import { withErrorHandling } from "@/lib/errorUtils"
 import { AuthenticationError, DatabaseError, ValidationError } from "@/lib/errors"
 import clientPromise from "@/lib/mongodb"
 import bcrypt from "bcryptjs"
+import { ObjectId } from "mongodb"
 
 const uri = process.env.MONGODB_URI as string
 const dbName = uri.split("/").pop() || "test"
@@ -233,4 +234,26 @@ export async function getUserByEmail(email: string) {
 			email: user.email,
 		}
 	}, "getUserByEmail")
+}
+
+export async function getUserById(userId: string) {
+	return withErrorHandling(async () => {
+		if (!userId?.trim()) {
+			throw new ValidationError("User ID is required")
+		}
+
+		const client = await clientPromise
+		const db = client.db(dbName)
+
+		const user = await db.collection(TABLES.users).findOne({ _id: new ObjectId(userId) })
+		if (!user) {
+			throw new ValidationError("User not found")
+		}
+
+		return {
+			id: user._id.toString(),
+			fullName: user.fullName,
+			email: user.email,
+		}
+	}, "getUserById")
 }

@@ -1,30 +1,72 @@
+"use client"
+import { APP_INTERNAL_APIS } from "@/config/constants"
+import { useAuth } from "@/contexts/auth"
 import { IProduct } from "@/interfaces/product"
+import Image from "next/image"
+import { useToast } from "../ui/Toast"
 
 export default function ProductDetailComponent({ product }: { product: IProduct }) {
+	const { user } = useAuth()
+	const { showSuccess, showError } = useToast()
 	const discountedPrice = product.price * (1 - product.discountPercentage / 100)
 
+	const createUserOrder = async () => {
+		if (!user) {
+			alert("Please login to place an order.")
+			return
+		}
+
+		try {
+			const response = await fetch(APP_INTERNAL_APIS.createOrder, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					userId: user.id,
+					orderData: {
+						productId: product.id,
+						total: discountedPrice,
+					},
+					productData: {
+						title: product.title,
+						thumbnail: product.thumbnail,
+						price: discountedPrice,
+					},
+				}),
+			})
+
+			if (response.ok) {
+				showSuccess("Order placed successfully!")
+			} else {
+				const errorData = await response.json()
+				showError(`Failed to place order: ${errorData.message}`)
+			}
+		} catch (error) {
+			console.error("Error placing order:", error)
+			showError("An error occurred while placing your order. Please try again.")
+		}
+	}
+
 	return (
-		<div className="mx-auto max-w-4xl rounded-3xl border theme-border theme-surface p-6 shadow-sm sm:p-8">
+		<div className="mx-auto max-w-4xl rounded-3xl  theme-border theme-surface p-6 shadow-sm sm:p-8">
 			<div className="grid gap-8 lg:grid-cols-2">
 				{/* Product Images */}
 				<div className="space-y-4">
-					<div className="aspect-square overflow-hidden rounded-2xl theme-border theme-surface border">
-						<img
-							src={product.thumbnail}
-							alt={product.title}
-							className="h-full w-full object-cover"
-						/>
+					<div className="aspect-square overflow-hidden rounded-2xl theme-border theme-surface  relative">
+						<Image src={product.thumbnail} alt={product.title} fill className="object-cover" />
 					</div>
 					<div className="grid grid-cols-3 gap-2">
 						{product.images.slice(0, 3).map((image, index) => (
 							<div
 								key={index}
-								className="aspect-square overflow-hidden rounded-lg theme-border theme-surface border"
+								className="aspect-square overflow-hidden rounded-lg theme-border theme-surface border relative"
 							>
-								<img
+								<Image
 									src={image}
 									alt={`${product.title} ${index + 1}`}
-									className="h-full w-full object-cover"
+									fill
+									className="object-cover"
 								/>
 							</div>
 						))}
@@ -129,6 +171,24 @@ export default function ProductDetailComponent({ product }: { product: IProduct 
 								#{tag}
 							</span>
 						))}
+					</div>
+
+					<div className="pt-4">
+						<button
+							className={`w-full py-3 px-6 rounded-2xl font-semibold transition-colors ${
+								user && product.stock > 0
+									? "bg-blue-600 hover:bg-blue-700 text-white"
+									: "bg-gray-300 text-gray-500 cursor-not-allowed"
+							}`}
+							disabled={!user || product.stock === 0}
+							onClick={() => {
+								if (user && product.stock > 0) {
+									createUserOrder()
+								}
+							}}
+						>
+							{!user ? "Login to Order" : product.stock === 0 ? "Out of Stock" : "Order Now"}
+						</button>
 					</div>
 				</div>
 			</div>

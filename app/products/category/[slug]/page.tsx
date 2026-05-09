@@ -1,5 +1,6 @@
 import ProductsListComponent from "@/components/products/ProductsList"
 import { IProductByCategoryPageProps } from "@/interfaces/category"
+import { IProduct } from "@/interfaces/product"
 import { getCategories } from "@/lib/category"
 import { getProductsByCategory } from "@/lib/products"
 import { Metadata } from "next"
@@ -22,7 +23,7 @@ export async function generateMetadata({
 		openGraph: {
 			title: `Products in ${slug} Category`,
 			description: `Explore our collection of products in the ${slug} category.`,
-			images: products.slice(0, 3).map((p) => p.thumbnail),
+			images: products.slice(0, 3).map((p: IProduct) => p.thumbnail),
 		},
 	}
 }

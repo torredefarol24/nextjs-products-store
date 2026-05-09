@@ -5,8 +5,9 @@ import { Metadata } from "next"
 import { notFound } from "next/navigation"
 
 export async function generateMetadata({ params }: IProductPageProps): Promise<Metadata> {
+	const { id } = await params
 	const products = await getProducts()
-	const product = products.find((p: IProduct) => p.id === parseInt(params.id))
+	const product = products.find((p: IProduct) => p.id === parseInt(id))
 
 	if (!product) {
 		return {
