@@ -4,6 +4,8 @@ import { getProductDetailsById, getProducts } from "@/lib/products"
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
 
+export const dynamic = "force-dynamic"
+
 export async function generateMetadata({ params }: IProductPageProps): Promise<Metadata> {
 	const { id } = await params
 	const products = await getProducts()
@@ -24,14 +26,6 @@ export async function generateMetadata({ params }: IProductPageProps): Promise<M
 			images: [product.thumbnail],
 		},
 	}
-}
-
-export async function generateStaticParams() {
-	const products = await getProducts()
-
-	return products.map((product: IProduct) => ({
-		id: product.id.toString(),
-	}))
 }
 
 export default async function ProductDetailPage({ params }: IProductPageProps) {

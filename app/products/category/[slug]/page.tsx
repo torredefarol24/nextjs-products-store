@@ -1,9 +1,10 @@
 import ProductsListComponent from "@/components/products/ProductsList"
 import { IProductByCategoryPageProps } from "@/interfaces/category"
 import { IProduct } from "@/interfaces/product"
-import { getCategories } from "@/lib/category"
 import { getProductsByCategory } from "@/lib/products"
 import { Metadata } from "next"
+
+export const dynamic = "force-dynamic"
 
 export async function generateMetadata({
 	params,
@@ -26,14 +27,6 @@ export async function generateMetadata({
 			images: products.slice(0, 3).map((p: IProduct) => p.thumbnail),
 		},
 	}
-}
-
-export async function generateStaticParams() {
-	const categories = await getCategories()
-
-	return categories.map((category) => ({
-		slug: category.slug,
-	}))
 }
 
 export default async function ProductsByCategoryPage({ params }: IProductByCategoryPageProps) {
