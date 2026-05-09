@@ -37,7 +37,7 @@ export default function DashboardComponent({ orders }: { orders: IOrder[] }) {
 	if (!user) {
 		return (
 			<div className="min-h-screen theme-surface flex items-center justify-center p-6">
-				<div className="rounded-3xl theme-border bg-slate-50 p-10 text-center shadow-sm">
+				<div className="rounded-3xl theme-border theme-surface p-10 text-center shadow-sm">
 					<p className="text-xl font-semibold theme-text mb-3">
 						Sign in to view your dashboard
 					</p>
@@ -88,22 +88,22 @@ export default function DashboardComponent({ orders }: { orders: IOrder[] }) {
 				</div>
 
 				<div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-					<div className="rounded-3xl bg-slate-50 p-6 shadow-sm">
+					<div className="rounded-3xl theme-surface p-6 shadow-sm">
 						<p className="text-sm font-semibold theme-text-muted">Orders placed</p>
 						<p className="mt-4 text-3xl font-semibold theme-text">{totalOrders}</p>
 						<p className="mt-2 text-sm theme-text-muted">Total orders made by you</p>
 					</div>
-					<div className="rounded-3xl bg-slate-50 p-6 shadow-sm">
+					<div className="rounded-3xl theme-surface p-6 shadow-sm">
 						<p className="text-sm font-semibold theme-text-muted">Total spent</p>
 						<p className="mt-4 text-3xl font-semibold theme-text">${totalSpent.toFixed(2)}</p>
 						<p className="mt-2 text-sm theme-text-muted">Overall spend across your orders</p>
 					</div>
-					<div className="rounded-3xl bg-slate-50 p-6 shadow-sm">
+					<div className="rounded-3xl theme-surface p-6 shadow-sm">
 						<p className="text-sm font-semibold theme-text-muted">Average order</p>
 						<p className="mt-4 text-3xl font-semibold theme-text">${averageOrder.toFixed(2)}</p>
 						<p className="mt-2 text-sm theme-text-muted">Average value per order</p>
 					</div>
-					<div className="rounded-3xl bg-slate-50 p-6 shadow-sm">
+					<div className="rounded-3xl theme-surface p-6 shadow-sm">
 						<p className="text-sm font-semibold theme-text-muted">Last order</p>
 						<p className="mt-4 text-3xl font-semibold theme-text">
 							{mostRecentOrder ? new Date(mostRecentOrder.createdAt).toLocaleDateString() : "—"}
@@ -123,7 +123,7 @@ export default function DashboardComponent({ orders }: { orders: IOrder[] }) {
 					</p>
 					{mostRecentOrder ? (
 						<div className="mt-6 space-y-4">
-							<div className="rounded-3xl border border-slate-200 bg-white p-4">
+							<div className="rounded-3xl border border-slate-200 theme-surface p-4">
 								<p className="text-sm font-semibold theme-text">
 									{mostRecentOrder.product.title}
 								</p>
@@ -132,7 +132,7 @@ export default function DashboardComponent({ orders }: { orders: IOrder[] }) {
 								</p>
 								<p className="text-sm theme-text-muted">Status: {mostRecentOrder.status}</p>
 							</div>
-							<div className="rounded-3xl border border-slate-200 bg-white p-4">
+							<div className="rounded-3xl border border-slate-200 theme-surface p-4">
 								<p className="text-sm font-semibold theme-text">Order date</p>
 								<p className="mt-2 text-sm theme-text-muted">
 									{new Date(mostRecentOrder.createdAt).toLocaleString()}
