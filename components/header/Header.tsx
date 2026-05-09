@@ -20,20 +20,23 @@ export function HeaderComponent() {
 				</h1>
 				<div className="flex flex-wrap items-center gap-3 sm:gap-4">
 					<nav className="flex flex-wrap items-center gap-3 text-sm theme-text sm:gap-4">
-						<Link className="transition theme-link" href="/">
-							Home
-						</Link>
+						{!user && (
+							<Link className="transition theme-link" href="/">
+								Home
+							</Link>
+						)}
 						<Link className="transition theme-link" href={APP_ROUTES.products}>
 							Products
 						</Link>
 						<Link className="transition theme-link" href={APP_ROUTES.category}>
 							Category
 						</Link>
-						<Link className="transition theme-link" href={APP_ROUTES.contact}>
-							Contact
-						</Link>
+
 						{user ? (
 							<>
+								<Link className="transition theme-link" href={APP_ROUTES.orders}>
+									Orders
+								</Link>
 								<Link className="transition theme-link" href={APP_ROUTES.profile}>
 									Profile
 								</Link>
@@ -46,6 +49,9 @@ export function HeaderComponent() {
 								</Link>
 							</>
 						)}
+						<Link className="transition theme-link" href={APP_ROUTES.contact}>
+							Contact
+						</Link>
 						<button
 							type="button"
 							onClick={toggleTheme}
