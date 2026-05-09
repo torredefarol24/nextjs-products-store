@@ -10,5 +10,6 @@ export interface IUserProfileComponentProps {
 	user: IUserProfileData
 	onUpdate: (data: IUserProfileData) => void
 	onPasswordChange?: (data: IChangePasswordData) => Promise<void>
+	onDeleteAccount?: () => Promise<void>
 	isEditing?: boolean
 }

@@ -14,7 +14,10 @@ export function HeaderComponent() {
 		<header className="theme-surface border-b px-4 py-4 shadow-sm sm:px-6 lg:px-8">
 			<div className="mx-auto flex w-full max-w-7xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
 				<h1 className="text-xl font-semibold theme-text">
-					<Link className="transition theme-link" href="/">
+					<Link
+						className="transition theme-link"
+						href={user ? APP_ROUTES.dashboard : APP_ROUTES.home}
+					>
 						Kyle&apos;s Store
 					</Link>
 				</h1>
@@ -31,14 +34,23 @@ export function HeaderComponent() {
 						<Link className="transition theme-link" href={APP_ROUTES.category}>
 							Category
 						</Link>
+						{!user && (
+							<Link className="transition theme-link" href={APP_ROUTES.contact}>
+								Contact
+							</Link>
+						)}
 
 						{user ? (
 							<>
 								<Link className="transition theme-link" href={APP_ROUTES.orders}>
 									Orders
 								</Link>
+
 								<Link className="transition theme-link" href={APP_ROUTES.profile}>
 									Profile
+								</Link>
+								<Link className="transition theme-link" href={APP_ROUTES.contact}>
+									Contact
 								</Link>
 								<SignoutButton />
 							</>
@@ -49,16 +61,6 @@ export function HeaderComponent() {
 								</Link>
 							</>
 						)}
-						<Link className="transition theme-link" href={APP_ROUTES.contact}>
-							Contact
-						</Link>
-						<button
-							type="button"
-							onClick={toggleTheme}
-							className="theme-button inline-flex h-9 items-center justify-center rounded-full border px-3 text-sm font-medium transition"
-						>
-							{theme === "light" ? "🌙 Dark" : "☀️ Light"}
-						</button>
 					</nav>
 				</div>
 			</div>

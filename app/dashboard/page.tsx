@@ -1,14 +1,14 @@
-import OrdersListComponent from "@/components/orders/OrderList"
+import DashboardComponent from "@/components/dashboard/Dashboard"
 import { getCurrentUser } from "@/lib/auth"
 import { getUserOrders } from "@/lib/orders"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-	title: "Orders",
+	title: "Dashboard",
 }
 
-export default async function OrdersPage() {
+export default async function DashboardPage() {
 	const user = await getCurrentUser()
 	const orders = await getUserOrders(user?.id)
-	return <OrdersListComponent orders={orders} />
+	return <DashboardComponent orders={orders} />
 }
