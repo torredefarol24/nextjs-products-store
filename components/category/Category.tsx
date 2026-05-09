@@ -1,4 +1,4 @@
-import { APP_ROUTES } from "@/config/constants"
+import { ROUTES } from "@/config/constants"
 import { ICategory } from "@/interfaces/category"
 import Link from "next/link"
 
@@ -27,7 +27,7 @@ export default function Category({ name, slug }: ICategory) {
 				{/* Link */}
 				<Link
 					className="inline-flex items-center gap-2 text-sm font-medium theme-link group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-all duration-200 group-hover:gap-3"
-					href={APP_ROUTES.productByCategory(slug)}
+					href={ROUTES.productByCategory(slug)}
 				>
 					<span>Shop {name} products</span>
 					<svg

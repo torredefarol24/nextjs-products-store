@@ -1,5 +1,5 @@
+import { AppError } from "@/config/errors"
 import { loginUser } from "@/lib/auth"
-import { AppError } from "@/lib/errors"
 import jwt from "jsonwebtoken"
 import { NextResponse } from "next/server"
 

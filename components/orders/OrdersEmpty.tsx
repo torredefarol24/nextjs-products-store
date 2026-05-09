@@ -1,4 +1,4 @@
-import { APP_ROUTES } from "@/config/constants"
+import { ROUTES } from "@/config/constants"
 import Link from "next/link"
 
 export function OrderEmpty() {
@@ -22,10 +22,10 @@ export function OrderEmpty() {
 				</div>
 				<h2 className="text-2xl font-bold theme-text mb-2">No Orders Yet</h2>
 				<p className="theme-text-muted mb-6">
-					You haven't placed any orders yet. Start shopping to see your orders here!
+					You haven&apos;t placed any orders yet. Start shopping to see your orders here!
 				</p>
 				<Link
-					href={APP_ROUTES.products}
+					href={ROUTES.products}
 					className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl"
 				>
 					Start Shopping

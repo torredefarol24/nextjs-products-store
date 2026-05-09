@@ -1,9 +1,9 @@
 "use client"
 
 import LoginComponent from "@/components/auth/Login"
-import { APP_ROUTES } from "@/config/constants"
+import { ROUTES } from "@/config/constants"
 import { useAuth } from "@/contexts/auth"
-import { LoginData } from "@/interfaces/auth"
+import { ILoginData } from "@/interfaces/auth"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 
@@ -15,9 +15,9 @@ export default function LoginPage() {
 		document.title = "Login"
 	}, [])
 
-	const handleLogin = async (data: LoginData) => {
+	const handleLogin = async (data: ILoginData) => {
 		await login(data)
-		router.push(APP_ROUTES.dashboard)
+		router.push(ROUTES.dashboard)
 	}
 
 	return (

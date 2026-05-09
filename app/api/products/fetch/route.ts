@@ -1,4 +1,4 @@
-import { AppError } from "@/lib/errors"
+import { AppError } from "@/config/errors"
 import { getProducts } from "@/lib/products"
 import { NextResponse } from "next/server"
 

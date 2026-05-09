@@ -1,17 +1,17 @@
 import { AppError } from "@/config/errors"
-import { getUserByEmail } from "@/lib/auth"
+import { cookies } from "next/headers"
 import { NextResponse } from "next/server"
 
 export async function POST(request: Request) {
 	try {
-		const body = await request.json()
-		const user = await getUserByEmail(body.email)
-		return NextResponse.json({ user })
+		const cookieStore = await cookies()
+		cookieStore.delete("token")
+		return NextResponse.json({ message: "Logged out successfully" })
 	} catch (error) {
-		console.error("Get user API error:", error)
+		console.error("Logout API error:", error)
 		if (error instanceof AppError) {
 			return NextResponse.json({ message: error.message }, { status: error.statusCode || 400 })
 		}
-		return NextResponse.json({ message: "Unable to retrieve user" }, { status: 500 })
+		return NextResponse.json({ message: "Unable to logout" }, { status: 500 })
 	}
 }

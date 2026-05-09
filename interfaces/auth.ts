@@ -5,7 +5,7 @@ export interface ISignupData {
 	confirmPassword?: string
 }
 
-export interface LoginData {
+export interface ILoginData {
 	email: string
 	password: string
 }
@@ -39,7 +39,7 @@ export interface IChangePasswordData {
 export interface IAuthContextType {
 	user: IUser | null
 	loading: boolean
-	login: (data: LoginData) => Promise<IUser>
+	login: (data: ILoginData) => Promise<IUser>
 	logout: () => void
 	updateProfile: (data: { fullName: string; email: string }) => Promise<IUser>
 	changePassword: (data: IChangePasswordData) => Promise<void>

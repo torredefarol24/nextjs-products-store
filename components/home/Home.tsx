@@ -1,6 +1,4 @@
-"use client"
-
-import { APP_ROUTES } from "@/config/constants"
+import { ROUTES } from "@/config/constants"
 import Link from "next/link"
 
 export default function Home() {
@@ -14,7 +12,7 @@ export default function Home() {
 						Discover amazing products at unbeatable prices
 					</p>
 					<Link
-						href={APP_ROUTES.products}
+						href={ROUTES.products}
 						className="inline-block bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition duration-300"
 					>
 						Shop Now
@@ -61,13 +59,13 @@ export default function Home() {
 					</p>
 					<div className="flex flex-col sm:flex-row gap-4 justify-center">
 						<Link
-							href={APP_ROUTES.products}
+							href={ROUTES.products}
 							className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition duration-300"
 						>
 							View Products
 						</Link>
 						<Link
-							href={APP_ROUTES.category}
+							href={ROUTES.category}
 							className="theme-surface px-6 py-3 rounded-lg font-medium transition duration-300"
 						>
 							Browse Categories

@@ -1,38 +1,13 @@
 "use server"
 
 import { TABLES } from "@/config/constants"
-import { ISignupData, LoginData } from "@/interfaces/auth"
-import { withErrorHandling } from "@/lib/errorUtils"
-import { AuthenticationError, DatabaseError, ValidationError } from "@/lib/errors"
-import clientPromise from "@/lib/mongodb"
+import { AuthenticationError, DatabaseError, ValidationError } from "@/config/errors"
+import { clientPromise, dbName } from "@/config/mongodb"
+import { ILoginData, ISignupData } from "@/interfaces/auth"
+import { withErrorHandling } from "@/utils/errorHandler"
 import bcrypt from "bcryptjs"
-import jwt from "jsonwebtoken"
 import { ObjectId } from "mongodb"
-import { cookies } from "next/headers"
 
-const uri = process.env.MONGODB_URI as string
-const dbName = uri.split("/").pop() || "test"
-
-export async function getCurrentUser() {
-	const cookieStore = await cookies()
-	const token = cookieStore.get("token")?.value
-
-	if (!token) {
-		return null
-	}
-
-	try {
-		const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload
-
-		return {
-			id: decoded.id,
-			email: decoded.email,
-			role: decoded.role,
-		}
-	} catch {
-		return null
-	}
-}
 
 export async function createUser(signupData: ISignupData) {
 	return withErrorHandling(async () => {
@@ -85,7 +60,7 @@ export async function createUser(signupData: ISignupData) {
 	}, "createUser")
 }
 
-export async function loginUser(loginData: LoginData) {
+export async function loginUser(loginData: ILoginData) {
 	return withErrorHandling(async () => {
 		const { email, password } = loginData
 

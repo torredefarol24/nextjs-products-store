@@ -1,10 +1,9 @@
 "use client"
-import { APP_INTERNAL_APIS } from "@/config/constants"
+import { APIS } from "@/config/constants"
 import { useAuth } from "@/contexts/auth"
+import { useToast } from "@/contexts/toasts"
 import { IProduct } from "@/interfaces/product"
 import Image from "next/image"
-import { useToast } from "../ui/Toast"
-
 export default function ProductDetailComponent({ product }: { product: IProduct }) {
 	const { user } = useAuth()
 	const { showSuccess, showError } = useToast()
@@ -17,7 +16,7 @@ export default function ProductDetailComponent({ product }: { product: IProduct 
 		}
 
 		try {
-			const response = await fetch(APP_INTERNAL_APIS.createOrder, {
+			const response = await fetch(APIS.INTERNAL.createOrder, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",

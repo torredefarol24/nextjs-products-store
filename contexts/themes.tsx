@@ -1,22 +1,16 @@
 "use client"
 
+import { IThemeContextType, ThemeType } from "@/interfaces/common"
 import { createContext, useContext, useEffect, useState } from "react"
 
-type Theme = "light" | "dark"
+export const ThemeContext = createContext<IThemeContextType | undefined>(undefined)
 
-interface ThemeContextType {
-	theme: Theme
-	toggleTheme: () => void
-}
-
-export const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
-
-export default function ThemeProvider({ children }: { children: React.ReactNode }) {
-	const [theme, setTheme] = useState<Theme>("light")
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
+	const [theme, setTheme] = useState<ThemeType>("light")
 	const [mounted, setMounted] = useState(false)
 
 	useEffect(() => {
-		const storedTheme = (localStorage.getItem("theme") as Theme) || "light"
+		const storedTheme = (localStorage.getItem("theme") as ThemeType) || "light"
 		const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
 		const activeTheme = storedTheme || (prefersDark ? "dark" : "light")
 

@@ -1,11 +1,11 @@
-import { ENDPOINTS } from "@/config/constants"
-import { withErrorHandling } from "@/lib/errorUtils"
-import { NetworkError, ValidationError } from "@/lib/errors"
+import { APIS } from "@/config/constants"
+import { NetworkError, ValidationError } from "@/config/errors"
+import { withErrorHandling } from "@/utils/errorHandler"
 
 export async function getProducts() {
 	return withErrorHandling(async () => {
-		const response = await fetch(ENDPOINTS.products, {
-			next: { revalidate: 3600 }, // Cache for 1 hour
+		const response = await fetch(APIS.ENDPOINTS.getProducts, {
+			next: { revalidate: 3600 },
 		})
 
 		if (!response.ok) {
@@ -30,8 +30,8 @@ export async function getProductDetailsById(productId: number) {
 			throw new ValidationError("Invalid product ID")
 		}
 
-		const response = await fetch(`${ENDPOINTS.products}/${productId}`, {
-			next: { revalidate: 3600 }, // Cache for 1 hour
+		const response = await fetch(APIS.ENDPOINTS.getProductById(productId), {
+			next: { revalidate: 3600 },
 		})
 
 		if (!response.ok) {
@@ -60,7 +60,7 @@ export async function getProductsByCategory(category: string) {
 		}
 
 		const response = await fetch(
-			`${ENDPOINTS.productsByCategory(encodeURIComponent(category))}`,
+			APIS.ENDPOINTS.getProductsByCategory(encodeURIComponent(category)),
 			{
 				next: { revalidate: 3600 }, // Cache for 1 hour
 			},

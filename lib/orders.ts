@@ -1,15 +1,12 @@
 "use server"
 
 import { TABLES } from "@/config/constants"
+import { DatabaseError, ValidationError } from "@/config/errors"
 import { IOrderData } from "@/interfaces/order"
+import { withErrorHandling } from "@/utils/errorHandler"
 import { ObjectId } from "mongodb"
+import { clientPromise, dbName } from "../config/mongodb"
 import { getUserById } from "./auth"
-import { ValidationError } from "./errors"
-import { withErrorHandling } from "./errorUtils"
-import clientPromise from "./mongodb"
-
-const uri = process.env.MONGODB_URI as string
-const dbName = uri.split("/").pop() || "test"
 
 export async function getUserOrders(userId: string) {
 	return withErrorHandling(async () => {

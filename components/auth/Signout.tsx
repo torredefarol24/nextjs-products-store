@@ -1,6 +1,6 @@
 "use client"
 
-import { APP_ROUTES } from "@/config/constants"
+import { ROUTES } from "@/config/constants"
 import { useAuth } from "@/contexts/auth"
 import { useRouter } from "next/navigation"
 
@@ -8,9 +8,9 @@ export default function SignoutButton() {
 	const { logout } = useAuth()
 	const router = useRouter()
 
-	const handleSignOut = () => {
-		logout()
-		router.push(APP_ROUTES.home)
+	const handleSignOut = async () => {
+		await logout()
+		router.push(ROUTES.home)
 	}
 
 	return (

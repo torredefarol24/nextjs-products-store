@@ -1,4 +1,4 @@
-import { AppError, DatabaseError, NetworkError, ValidationError } from "./errors"
+import { AppError, DatabaseError, NetworkError, ValidationError } from "@/config/errors"
 
 export async function withErrorHandling<T>(
 	operation: () => Promise<T>,
@@ -46,6 +46,7 @@ export function handleApiError(error: unknown): AppError {
 	if (error instanceof Error) {
 		// Handle HTTP response errors
 		if ("status" in error) {
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			const httpError = error as any
 			switch (httpError.status) {
 				case 400:

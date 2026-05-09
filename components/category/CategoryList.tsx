@@ -5,18 +5,18 @@ export function CategoryListComponent({ categories }: { categories: ICategory[] 
 	return (
 		<div className="space-y-8">
 			{/* Header Section */}
-			<div className="text-center space-y-4">
-				<h2 className="text-4xl font-bold theme-text bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+			<div className="space-y-4">
+				<h2 className="mt-8 text-4xl font-bold theme-text bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
 					Product Categories
 				</h2>
-				<p className="text-lg theme-text-muted max-w-2xl mx-auto leading-relaxed">
+				<p className="text-lg mt-4 theme-text-muted max-w-2xl leading-relaxed">
 					Browse our curated selection of product categories to find exactly what you&apos;re
 					looking for. From beauty essentials to home decor, we have everything you need.
 				</p>
 			</div>
 
 			{/* Categories Grid */}
-			<div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+			<div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 				{categories.map((category, idx) => (
 					<Category
 						key={idx}

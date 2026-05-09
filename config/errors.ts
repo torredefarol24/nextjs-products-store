@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export class AppError extends Error {
 	constructor(
 		message: string,
@@ -38,13 +39,13 @@ export class DatabaseError extends AppError {
 	}
 }
 
-export interface ErrorState {
+export interface IErrorState {
 	hasError: boolean
 	error?: AppError | Error
 	message?: string
 }
 
-export interface ToastMessage {
+export interface IToastMessage {
 	id: string
 	type: "success" | "error" | "warning" | "info"
 	message: string

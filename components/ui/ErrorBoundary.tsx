@@ -1,6 +1,6 @@
 "use client"
 
-import { AppError } from "@/lib/errors"
+import { AppError } from "@/config/errors"
 import React, { Component, ReactNode } from "react"
 
 interface Props {

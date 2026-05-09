@@ -1,5 +1,5 @@
+import { AppError } from "@/config/errors"
 import { updateProfile } from "@/lib/auth"
-import { AppError } from "@/lib/errors"
 import { NextResponse } from "next/server"
 
 export async function PUT(request: Request) {
