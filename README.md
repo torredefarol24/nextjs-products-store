@@ -1,7 +1,6 @@
 Products Store created using nextjs.
 
-To start it, run:
+To test it, visit:
 
-```bash
-npm dev
-```
+[NextJs KyleStore](https://nextjs-br06-kylestore.appwrite.network)
+
