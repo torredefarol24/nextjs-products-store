@@ -42,9 +42,9 @@ export default function ProductsListComponent({
 				<div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
 					<button
 						onClick={() => setShowFilters(!showFilters)}
-						className="flex items-center gap-2 px-4 py-2 theme-border theme-surface border rounded-xl hover:theme-surface transition theme-text"
+						className="flex items-center gap-2 px-4 py-2.5 rounded-lg card card-lg font-medium theme-text transition-all duration-200 hover:shadow-md"
 					>
-						<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 							<path
 								strokeLinecap="round"
 								strokeLinejoin="round"
@@ -52,11 +52,11 @@ export default function ProductsListComponent({
 								d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
 							/>
 						</svg>
-						Filters {showFilters ? "▼" : "▶"}
+						{showFilters ? "Hide Filters" : "Show Filters"}
 					</button>
 
 					<div className="flex flex-wrap items-center gap-3">
-						<div className="text-sm theme-text-muted">
+						<div className="text-sm font-medium theme-text-muted px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800">
 							{filteredProducts.length} of {products.length} products
 						</div>
 						{(searchQuery ||
@@ -73,7 +73,7 @@ export default function ProductsListComponent({
 									handleClearSearch()
 									setShowFilters(false)
 								}}
-								className="px-4 py-2 theme-link hover:theme-text transition text-sm"
+								className="px-4 py-2 rounded-lg font-medium text-sm bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-950/50 transition"
 							>
 								Clear all
 							</button>
@@ -83,7 +83,7 @@ export default function ProductsListComponent({
 
 				{/* Filter Panel */}
 				{showFilters && (
-					<div className="rounded-2xl theme-border theme-surface border p-6">
+					<div className="card card-lg p-6 animate-in fade-in slide-in-from-top-2 duration-200">
 						<ProductFilterComponent
 							products={products}
 							filters={filters}

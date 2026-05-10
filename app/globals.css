@@ -4,22 +4,40 @@
 	--background: #ffffff;
 	--foreground: #0f172a;
 	--surface: #ffffff;
-	--muted: #f8fafc;
+	--surface-secondary: #f8fafc;
+	--muted: #64748b;
+	--muted-light: #f1f5f9;
 	--border: #e2e8f0;
-	--link: #475569;
+	--border-light: #f1f5f9;
+	--link: #0ea5e9;
+	--link-hover: #0284c7;
 	--button-bg: #f8fafc;
 	--button-border: #cbd5e1;
+	--accent-primary: #0ea5e9;
+	--accent-secondary: #8b5cf6;
+	--success: #10b981;
+	--warning: #f59e0b;
+	--error: #ef4444;
 }
 
 html.dark {
 	--background: #0f172a;
-	--foreground: #f8fafc;
-	--surface: #111827;
-	--muted: #0f172a;
+	--foreground: #f1f5f9;
+	--surface: #1e293b;
+	--surface-secondary: #0f172a;
+	--muted: #94a3b8;
+	--muted-light: #1e293b;
 	--border: #334155;
-	--link: #cbd5e1;
-	--button-bg: #1f2937;
+	--border-light: #1e293b;
+	--link: #38bdf8;
+	--link-hover: #0ea5e9;
+	--button-bg: #1e293b;
 	--button-border: #475569;
+	--accent-primary: #38bdf8;
+	--accent-secondary: #a78bfa;
+	--success: #10b981;
+	--warning: #fbbf24;
+	--error: #f87171;
 	color-scheme: dark;
 }
 
@@ -41,59 +59,117 @@ body {
 		BlinkMacSystemFont,
 		"Segoe UI",
 		sans-serif;
+	transition:
+		background-color 0.2s,
+		color 0.2s;
 }
 
-.theme-surface {
-	background: var(--surface);
-	border-color: var(--border);
-}
+@layer utilities {
+	/* Theme Utilities */
+	.theme-surface {
+		background: var(--surface);
+		border-color: var(--border);
+	}
 
-.theme-text {
-	color: var(--foreground);
-}
+	.theme-surface-secondary {
+		background: var(--surface-secondary);
+	}
 
-.theme-text-muted {
-	color: var(--muted);
-}
+	.theme-text {
+		color: var(--foreground);
+	}
 
-.theme-border {
-	border-color: var(--border);
-}
+	.theme-text-muted {
+		color: var(--muted);
+	}
 
-.theme-link {
-	color: var(--link);
-}
+	.theme-border {
+		border-color: var(--border);
+	}
 
-.theme-link:hover {
-	color: var(--foreground);
-}
+	.theme-border-light {
+		border-color: var(--border-light);
+	}
 
-.theme-border {
-	border-color: var(--border);
-}
+	.theme-link {
+		color: var(--link);
+		transition: color 0.2s;
+	}
 
-.theme-text {
-	color: var(--foreground);
-}
+	.theme-link:hover {
+		color: var(--link-hover);
+	}
 
-.theme-text-muted {
-	color: var(--link);
-}
+	/* Button System */
+	.btn {
+		@apply inline-flex items-center justify-center px-4 py-2.5 rounded-lg font-medium transition-all duration-200;
+	}
 
-.theme-link {
-	color: var(--link);
-}
+	.btn-primary {
+		@apply bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-md hover:shadow-lg hover:from-blue-700 hover:to-cyan-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-slate-950;
+	}
 
-.theme-link:hover {
-	color: var(--foreground);
-}
+	.btn-secondary {
+		@apply border hover:shadow-md transition-shadow;
+		background: var(--surface);
+		border-color: var(--border);
+		color: var(--foreground);
+	}
 
-.theme-button {
-	background: var(--button-bg);
-	border-color: var(--button-border);
-	color: var(--foreground);
-}
+	.btn-outline {
+		@apply border hover:bg-slate-100 dark:hover:bg-slate-800;
+		background: transparent;
+		border-color: var(--border);
+		color: var(--foreground);
+	}
 
-.theme-button:hover {
-	filter: brightness(0.95);
+	.btn-danger {
+		@apply bg-red-600 text-white shadow-md hover:bg-red-700 hover:shadow-lg;
+	}
+
+	.btn-success {
+		@apply bg-green-600 text-white shadow-md hover:bg-green-700 hover:shadow-lg;
+	}
+
+	.btn-sm {
+		@apply px-3 py-1.5 text-sm;
+	}
+
+	.btn-lg {
+		@apply px-6 py-3 text-lg;
+	}
+
+	/* Input System */
+	.input-field {
+		@apply w-full px-4 py-2.5 rounded-lg border placeholder:text-current placeholder:opacity-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all;
+		background: var(--surface);
+		border-color: var(--border);
+		color: var(--foreground);
+	}
+
+	.input-error {
+		@apply border-red-500 focus:ring-red-500;
+	}
+
+	/* Card System */
+	.card {
+		@apply rounded-xl border shadow-sm transition-all duration-200 hover:shadow-md;
+		background: var(--surface);
+		border-color: var(--border);
+		color: var(--foreground);
+	}
+
+	.card-lg {
+		@apply rounded-2xl;
+	}
+
+	/* Text Utilities */
+	.text-gradient {
+		@apply bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent;
+	}
+
+	/* Smooth Transitions */
+	.transition-smooth {
+		@apply transition-all duration-200 ease-out;
+	}
 }

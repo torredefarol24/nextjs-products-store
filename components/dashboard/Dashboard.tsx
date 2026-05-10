@@ -56,112 +56,162 @@ export default function DashboardComponent({ orders }: { orders: IOrder[] }) {
 	}
 
 	return (
-		<section className="mx-auto max-w-6xl space-y-8">
-			<div className="rounded-3xl theme-border theme-surface p-8 shadow-sm">
-				<div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-					<div>
-						<p className="text-sm font-semibold uppercase tracking-[0.24em] theme-text-muted">
-							Dashboard
-						</p>
-						<h1 className="mt-3 text-3xl font-semibold theme-text">
-							Welcome back, {user.fullName || user.email}
-						</h1>
-						<p className="mt-2 max-w-2xl text-sm leading-6 theme-text-muted">
-							A quick overview of your orders and account activity to help you stay on top of
-							store updates.
-						</p>
-					</div>
-					<div className="flex flex-wrap gap-3">
-						<Link
-							href={ROUTES.orders}
-							className="inline-flex items-center justify-center rounded-2xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
-						>
-							View Orders
-						</Link>
-						<Link
-							href={ROUTES.settings}
-							className="inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-transparent px-4 py-2 text-sm font-semibold theme-text transition hover:bg-slate-100"
-						>
-							Manage Profile
-						</Link>
-					</div>
+		<section className="space-y-8">
+			{/* Welcome Header */}
+			<div className="card card-lg p-8 space-y-6">
+				<div className="space-y-3">
+					<p className="text-sm font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400">
+						Dashboard
+					</p>
+					<h1 className="text-4xl font-bold theme-text">
+						Welcome back, {user.fullName || user.email}!
+					</h1>
+					<p className="text-lg theme-text-muted max-w-2xl">
+						Here&apos;s a quick overview of your orders and account activity to help you stay on top
+						of store updates.
+					</p>
 				</div>
 
-				<div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-					<div className="rounded-3xl theme-surface p-6 shadow-sm">
-						<p className="text-sm font-semibold theme-text-muted">Orders placed</p>
-						<p className="mt-4 text-3xl font-semibold theme-text">{totalOrders}</p>
-						<p className="mt-2 text-sm theme-text-muted">Total orders made by you</p>
-					</div>
-					<div className="rounded-3xl theme-surface p-6 shadow-sm">
-						<p className="text-sm font-semibold theme-text-muted">Total spent</p>
-						<p className="mt-4 text-3xl font-semibold theme-text">${totalSpent.toFixed(2)}</p>
-						<p className="mt-2 text-sm theme-text-muted">Overall spend across your orders</p>
-					</div>
-					<div className="rounded-3xl theme-surface p-6 shadow-sm">
-						<p className="text-sm font-semibold theme-text-muted">Average order</p>
-						<p className="mt-4 text-3xl font-semibold theme-text">${averageOrder.toFixed(2)}</p>
-						<p className="mt-2 text-sm theme-text-muted">Average value per order</p>
-					</div>
-					<div className="rounded-3xl theme-surface p-6 shadow-sm">
-						<p className="text-sm font-semibold theme-text-muted">Last order</p>
-						<p className="mt-4 text-3xl font-semibold theme-text">
-							{mostRecentOrder ? new Date(mostRecentOrder.createdAt).toLocaleDateString() : "—"}
-						</p>
-						<p className="mt-2 text-sm theme-text-muted">
-							Latest order status: {mostRecentOrder?.status ?? "No orders yet"}
-						</p>
-					</div>
+				<div className="flex flex-col sm:flex-row gap-3 pt-2">
+					<Link href={ROUTES.orders} className="btn btn-primary">
+						View All Orders
+					</Link>
+					<Link href={ROUTES.settings} className="btn btn-secondary">
+						Manage Profile
+					</Link>
 				</div>
 			</div>
 
-			<div className="grid gap-6 lg:grid-cols-2">
-				<div className="rounded-3xl theme-border theme-surface p-6">
-					<h2 className="text-xl font-semibold theme-text">Recent Order Detail</h2>
-					<p className="mt-3 text-sm theme-text-muted">
+			{/* Stats Grid */}
+			<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+				{/* Orders Placed */}
+				<div className="card card-lg p-6 space-y-4">
+					<div className="flex items-center justify-between">
+						<h3 className="text-sm font-semibold theme-text-muted uppercase">Orders Placed</h3>
+						<span className="text-2xl">📦</span>
+					</div>
+					<p className="text-4xl font-bold text-gradient">{totalOrders}</p>
+					<p className="text-sm theme-text-muted">Total orders made by you</p>
+				</div>
+
+				{/* Total Spent */}
+				<div className="card card-lg p-6 space-y-4">
+					<div className="flex items-center justify-between">
+						<h3 className="text-sm font-semibold theme-text-muted uppercase">Total Spent</h3>
+						<span className="text-2xl">💰</span>
+					</div>
+					<p className="text-4xl font-bold text-gradient">${totalSpent.toFixed(2)}</p>
+					<p className="text-sm theme-text-muted">Overall spend across all orders</p>
+				</div>
+
+				{/* Average Order */}
+				<div className="card card-lg p-6 space-y-4">
+					<div className="flex items-center justify-between">
+						<h3 className="text-sm font-semibold theme-text-muted uppercase">Avg. Order</h3>
+						<span className="text-2xl">📊</span>
+					</div>
+					<p className="text-4xl font-bold text-gradient">${averageOrder.toFixed(2)}</p>
+					<p className="text-sm theme-text-muted">Average value per order</p>
+				</div>
+
+				{/* Last Order */}
+				<div className="card card-lg p-6 space-y-4">
+					<div className="flex items-center justify-between">
+						<h3 className="text-sm font-semibold theme-text-muted uppercase">Last Order</h3>
+						<span className="text-2xl">📅</span>
+					</div>
+					<p className="text-3xl font-bold text-gradient">
+						{mostRecentOrder ? new Date(mostRecentOrder.createdAt).toLocaleDateString() : "—"}
+					</p>
+					<p className="text-sm theme-text-muted">
+						{mostRecentOrder ? `Status: ${mostRecentOrder.status}` : "No orders yet"}
+					</p>
+				</div>
+			</div>
+
+			{/* Recent Activity */}
+			<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+				{/* Recent Order Detail */}
+				<div className="card card-lg p-6 space-y-4">
+					<h2 className="text-2xl font-bold theme-text">Recent Order</h2>
+					<p className="text-sm theme-text-muted">
 						Latest order activity and product details from your most recent purchase.
 					</p>
 					{mostRecentOrder ? (
-						<div className="mt-6 space-y-4">
-							<div className="rounded-3xl border border-slate-200 theme-surface p-4">
-								<p className="text-sm font-semibold theme-text">
-									{mostRecentOrder.product.title}
-								</p>
-								<p className="mt-2 text-sm theme-text-muted">
-									Order total: ${mostRecentOrder.total.toFixed(2)}
-								</p>
-								<p className="text-sm theme-text-muted">Status: {mostRecentOrder.status}</p>
+						<div className="space-y-3 mt-4">
+							<div className="p-4 rounded-lg bg-slate-50 dark:bg-slate-800/10 space-y-3">
+								<p className="font-semibold theme-text">{mostRecentOrder.product.title}</p>
+								<div className="grid grid-cols-2 gap-4 text-sm">
+									<div>
+										<p className="theme-text-muted">Order Total</p>
+										<p className="font-bold theme-text text-lg">
+											${mostRecentOrder.total.toFixed(2)}
+										</p>
+									</div>
+									<div>
+										<p className="theme-text-muted">Status</p>
+										<p className="font-bold theme-text">{mostRecentOrder.status}</p>
+									</div>
+								</div>
+								<div>
+									<p className="theme-text-muted text-xs">Order Date</p>
+									<p className="text-sm theme-text">
+										{new Date(mostRecentOrder.createdAt).toLocaleString()}
+									</p>
+								</div>
 							</div>
-							<div className="rounded-3xl border border-slate-200 theme-surface p-4">
-								<p className="text-sm font-semibold theme-text">Order date</p>
-								<p className="mt-2 text-sm theme-text-muted">
-									{new Date(mostRecentOrder.createdAt).toLocaleString()}
-								</p>
-							</div>
+							<Link href={ROUTES.orders} className="btn btn-secondary w-full text-center">
+								View All Orders
+							</Link>
 						</div>
 					) : (
-						<div className="mt-6 rounded-3xl border border-dashed border-slate-300 bg-white p-6 text-sm theme-text-muted">
-							No order history is available yet. Place an order to populate your dashboard.
+						<div className="p-6 rounded-lg bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-900 text-center space-y-3 mt-4">
+							<p className="theme-text-muted">
+								No order history is available yet. Place an order to populate your dashboard.
+							</p>
+							<Link href={ROUTES.products} className="btn btn-primary inline-flex">
+								Start Shopping
+							</Link>
 						</div>
 					)}
 				</div>
-				<div className="rounded-3xl theme-border theme-surface p-6">
-					<h2 className="text-xl font-semibold theme-text">Quick actions</h2>
-					<p className="mt-3 text-sm theme-text-muted">
+
+				{/* Quick Actions */}
+				<div className="card card-lg p-6 space-y-4">
+					<h2 className="text-2xl font-bold theme-text">Quick Actions</h2>
+					<p className="text-sm theme-text-muted">
 						Keep your account up to date and continue browsing the store.
 					</p>
-					<div className="mt-6 flex flex-col gap-3 sm:flex-row">
+					<div className="space-y-2 mt-4">
 						<Link
 							href={ROUTES.products}
-							className="inline-flex items-center justify-center rounded-2xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800"
+							className="flex items-center justify-between p-4 rounded-lg bg-slate-50 dark:bg-slate-800/10 hover:shadow-md transition group"
 						>
-							Browse products
+							<div className="flex items-center gap-3">
+								<span className="text-2xl">🛍️</span>
+								<span className="font-semibold theme-text">Browse Products</span>
+							</div>
+							<span className="text-xl group-hover:translate-x-1 transition">→</span>
 						</Link>
 						<Link
-							href={ROUTES.orders}
-							className="inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-transparent px-4 py-2 text-sm font-semibold theme-text transition hover:bg-slate-100"
+							href={ROUTES.category}
+							className="flex items-center justify-between p-4 rounded-lg bg-slate-50 dark:bg-slate-800/10 hover:shadow-md transition group"
 						>
-							View orders
+							<div className="flex items-center gap-3">
+								<span className="text-2xl">🏷️</span>
+								<span className="font-semibold theme-text">Browse Categories</span>
+							</div>
+							<span className="text-xl group-hover:translate-x-1 transition">→</span>
+						</Link>
+						<Link
+							href={ROUTES.settings}
+							className="flex items-center justify-between p-4 rounded-lg bg-slate-50 dark:bg-slate-800/10 hover:shadow-md transition group"
+						>
+							<div className="flex items-center gap-3">
+								<span className="text-2xl">⚙️</span>
+								<span className="font-semibold theme-text">Update Profile</span>
+							</div>
+							<span className="text-xl group-hover:translate-x-1 transition">→</span>
 						</Link>
 					</div>
 				</div>

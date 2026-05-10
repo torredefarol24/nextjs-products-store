@@ -2,48 +2,74 @@ import { IProduct } from "@/interfaces/product"
 import Link from "next/link"
 
 export function ProductThumbnail({ product }: { product: IProduct }) {
+	const rating = product.rating.toFixed(1)
+	const displayPrice = product.price * (1 - product.discountPercentage / 100)
+
 	return (
-		<Link key={product.id} href={`/products/${product.id}`}>
-			<div className="group cursor-pointer">
-				<div className="aspect-square overflow-hidden rounded-2xl theme-border theme-surface border mb-4 transition group-hover:shadow-lg">
-					<img
-						src={product.thumbnail}
-						alt={product.title}
-						className="h-full w-full object-cover transition group-hover:scale-105"
-					/>
-				</div>
-				<div className="space-y-2">
-					<h3 className="font-semibold theme-text line-clamp-2 group-hover:theme-link transition">
-						{product.title}
-					</h3>
-					<p className="text-sm theme-text-muted line-clamp-2">{product.description}</p>
-					<div className="flex items-center justify-between">
-						<div className="flex items-center gap-2">
-							<span className="font-bold theme-text">${product.price.toFixed(2)}</span>
-							{product.discountPercentage > 0 && (
-								<span className="text-sm text-green-600 font-medium">
-									-{product.discountPercentage.toFixed(0)}%
-								</span>
-							)}
+		<Link href={`/products/${product.id}`}>
+			<div className="group cursor-pointer h-full">
+				<div className="card card-lg overflow-hidden mb-4 h-64 sm:h-72 transition-all duration-300 group-hover:shadow-xl">
+					<div className="relative w-full h-full overflow-hidden bg-slate-100 dark:bg-slate-800/10">
+						<img
+							src={product.thumbnail}
+							alt={product.title}
+							className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+						/>
+						{/* Discount Badge */}
+						{product.discountPercentage > 0 && (
+							<div className="absolute top-3 right-3 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+								-{product.discountPercentage.toFixed(0)}%
+							</div>
+						)}
+						{/* Stock Status Badge */}
+						<div className="absolute top-3 left-3">
+							<span
+								className={`px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-sm ${
+									product.availabilityStatus === "Low Stock"
+										? "bg-yellow-500/90 text-yellow-50"
+										: product.availabilityStatus === "In Stock"
+											? "bg-green-500/90 text-green-50"
+											: "bg-red-500/90 text-red-50"
+								}`}
+							>
+								{product.availabilityStatus}
+							</span>
 						</div>
-						<div className="flex items-center gap-1">
+						{/* Rating Overlay */}
+						<div className="absolute bottom-3 right-3 bg-white/95 theme-surface border theme-border backdrop-blur px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1.5">
 							<span className="text-yellow-400">★</span>
-							<span className="text-sm theme-text-muted">{product.rating.toFixed(1)}</span>
+							<span className="font-semibold text-sm theme-text">{rating}</span>
 						</div>
 					</div>
-					<div className="flex items-center justify-between text-xs theme-text-muted">
-						<span>{product.brand}</span>
-						<span
-							className={`px-2 py-1 rounded-full ${
-								product.availabilityStatus === "Low Stock"
-									? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200"
-									: product.availabilityStatus === "In Stock"
-										? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
-										: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200"
-							}`}
-						>
-							{product.availabilityStatus}
+				</div>
+
+				<div className="space-y-3">
+					{/* Title */}
+					<h3 className="font-semibold theme-text line-clamp-2 text-sm sm:text-base group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
+						{product.title}
+					</h3>
+
+					{/* Description */}
+					<p className="text-xs sm:text-sm theme-text-muted line-clamp-2 leading-relaxed">
+						{product.description}
+					</p>
+
+					{/* Price Section */}
+					<div className="flex items-baseline gap-2 pt-1">
+						<span className="text-lg sm:text-xl font-bold text-gradient">
+							${displayPrice.toFixed(2)}
 						</span>
+						{product.discountPercentage > 0 && (
+							<span className="text-xs sm:text-sm theme-text-muted line-through">
+								${product.price.toFixed(2)}
+							</span>
+						)}
+					</div>
+
+					{/* Meta Info */}
+					<div className="flex items-center justify-between text-xs theme-text-muted pt-2 border-t theme-border-light">
+						<span className="font-medium">{product.brand}</span>
+						<span className="text-right truncate">{product.category}</span>
 					</div>
 				</div>
 			</div>

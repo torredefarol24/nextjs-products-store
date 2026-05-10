@@ -229,7 +229,7 @@ export default function SettingsComponent({
 									disabled={isSaving}
 									className="flex-1 bg-green-600 hover:bg-green-700 disabled:bg-green-400 text-white font-medium py-3 px-4 rounded-lg transition"
 								>
-									{isSaving ? "Saving..." : "Save Changes"}
+									{isSaving ? "Saving..." : "Save "}
 								</button>
 								<button
 									onClick={handleCancel}
@@ -337,7 +337,7 @@ export default function SettingsComponent({
 								disabled={isPasswordSaving}
 								className="flex-1 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400 text-white font-medium py-3 px-4 rounded-lg transition"
 							>
-								{isPasswordSaving ? "Updating..." : "Update Password"}
+								{isPasswordSaving ? "Updating..." : "Update "}
 							</button>
 							<button
 								onClick={handlePasswordCancel}

@@ -27,3 +27,6 @@ export interface IToastContextType {
 	showWarning: (message: string, duration?: number) => void
 	showInfo: (message: string, duration?: number) => void
 }
+
+export type SortFieldType = "total" | "createdAt"
+export type SortDirectionType = "asc" | "desc"
