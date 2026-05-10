@@ -1,4 +1,6 @@
+import { ROUTES } from "@/config/constants"
 import { ICategory } from "@/interfaces/category"
+import Link from "next/link"
 import Category from "./Category"
 
 export function CategoryListComponent({ categories }: { categories: ICategory[] }) {
@@ -43,12 +45,18 @@ export function CategoryListComponent({ categories }: { categories: ICategory[] 
 							recommendations.
 						</p>
 						<div className="flex flex-wrap gap-3">
-							<button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors duration-200 shadow-md hover:shadow-lg">
+							<Link
+								className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors duration-200 shadow-md hover:shadow-lg"
+								href={ROUTES.products}
+							>
 								Search Products
-							</button>
-							<button className="px-4 py-2 theme-border theme-surface border rounded-lg font-medium theme-text hover:theme-surface transition-all duration-200">
+							</Link>
+							<Link
+								className="px-4 py-2 theme-border theme-surface border rounded-lg font-medium theme-text hover:theme-surface transition-all duration-200"
+								href={ROUTES.contact}
+							>
 								Contact Support
-							</button>
+							</Link>
 						</div>
 					</div>
 				</div>

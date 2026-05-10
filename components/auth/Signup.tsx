@@ -1,5 +1,6 @@
 "use client"
 
+import { ROUTES } from "@/config/constants"
 import { AppError } from "@/config/errors"
 import { useToast } from "@/contexts/toasts"
 import { ISignupComponentProps, ISignupData } from "@/interfaces/auth"
@@ -96,137 +97,137 @@ export default function SignupComponent({ onSignup }: ISignupComponentProps) {
 	}
 
 	return (
-		<div className="mx-auto max-w-md rounded-3xl border theme-border theme-surface p-8 shadow-sm">
-			<div className="mb-8 text-center">
-				<h2 className="text-3xl font-bold theme-text">Create Account</h2>
-				<p className="mt-2 theme-text-muted">Join us to start shopping with exclusive deals</p>
-			</div>
-
-			<form onSubmit={handleSubmit} className="space-y-6">
-				{/* Full Name Field */}
-				<div className="space-y-2">
-					<label htmlFor="fullName" className="block text-sm font-medium theme-text">
-						Full Name
-					</label>
-					<input
-						type="text"
-						id="fullName"
-						name="fullName"
-						value={formData.fullName}
-						onChange={handleInputChange}
-						className={`w-full rounded-xl border px-4 py-3 theme-text focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-							errors.fullName ? "border-red-500 theme-surface" : "theme-border theme-surface"
-						}`}
-						placeholder="Enter your full name"
-						disabled={isSubmitting}
-					/>
-					{errors.fullName && <p className="text-sm text-red-600">{errors.fullName}</p>}
+		<div className="w-full max-w-md mx-auto">
+			<div className="card card-lg p-8 sm:p-10 space-y-8">
+				{/* Header */}
+				<div className="space-y-3 text-center">
+					<h2 className="text-3xl sm:text-4xl font-bold theme-text">Create Account</h2>
+					<p className="theme-text-muted">Join us to start shopping with exclusive deals</p>
 				</div>
 
-				{/* Email Field */}
-				<div className="space-y-2">
-					<label htmlFor="email" className="block text-sm font-medium theme-text">
-						Email Address
-					</label>
-					<input
-						type="email"
-						id="email"
-						name="email"
-						value={formData.email}
-						onChange={handleInputChange}
-						className={`w-full rounded-xl border px-4 py-3 theme-text focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-							errors.email ? "border-red-500 theme-surface" : "theme-border theme-surface"
-						}`}
-						placeholder="Enter your email"
-						disabled={isSubmitting}
-					/>
-					{errors.email && <p className="text-sm text-red-600">{errors.email}</p>}
-				</div>
+				{/* Form */}
+				<form onSubmit={handleSubmit} className="space-y-5">
+					{/* Full Name Field */}
+					<div className="space-y-2">
+						<label htmlFor="fullName" className="block text-sm font-medium theme-text">
+							Full Name
+						</label>
+						<input
+							type="text"
+							id="fullName"
+							name="fullName"
+							value={formData.fullName}
+							onChange={handleInputChange}
+							className={`input-field ${errors.fullName ? "input-error" : ""}`}
+							placeholder="John Doe"
+							disabled={isSubmitting}
+						/>
+						{errors.fullName && (
+							<p className="text-sm text-red-500 font-medium">{errors.fullName}</p>
+						)}
+					</div>
 
-				{/* Password Field */}
-				<div className="space-y-2">
-					<label htmlFor="password" className="block text-sm font-medium theme-text">
-						Password
-					</label>
-					<input
-						type="password"
-						id="password"
-						name="password"
-						value={formData.password}
-						onChange={handleInputChange}
-						className={`w-full rounded-xl border px-4 py-3 theme-text focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-							errors.password ? "border-red-500 theme-surface" : "theme-border theme-surface"
-						}`}
-						placeholder="Create a password"
+					{/* Email Field */}
+					<div className="space-y-2">
+						<label htmlFor="email" className="block text-sm font-medium theme-text">
+							Email Address
+						</label>
+						<input
+							type="email"
+							id="email"
+							name="email"
+							value={formData.email}
+							onChange={handleInputChange}
+							className={`input-field ${errors.email ? "input-error" : ""}`}
+							placeholder="you@example.com"
+							disabled={isSubmitting}
+						/>
+						{errors.email && <p className="text-sm text-red-500 font-medium">{errors.email}</p>}
+					</div>
+
+					{/* Password Field */}
+					<div className="space-y-2">
+						<label htmlFor="password" className="block text-sm font-medium theme-text">
+							Password
+						</label>
+						<input
+							type="password"
+							id="password"
+							name="password"
+							value={formData.password}
+							onChange={handleInputChange}
+							className={`input-field ${errors.password ? "input-error" : ""}`}
+							placeholder="••••••••"
+							disabled={isSubmitting}
+						/>
+						{errors.password && (
+							<p className="text-sm text-red-500 font-medium">{errors.password}</p>
+						)}
+						<p className="text-xs theme-text-muted">
+							Password must be at least 6 characters long
+						</p>
+					</div>
+
+					{/* Confirm Password Field */}
+					<div className="space-y-2">
+						<label htmlFor="confirmPassword" className="block text-sm font-medium theme-text">
+							Confirm Password
+						</label>
+						<input
+							type="password"
+							id="confirmPassword"
+							name="confirmPassword"
+							value={formData.confirmPassword}
+							onChange={handleInputChange}
+							className={`input-field ${errors.confirmPassword ? "input-error" : ""}`}
+							placeholder="••••••••"
+							disabled={isSubmitting}
+						/>
+						{errors.confirmPassword && (
+							<p className="text-sm text-red-500 font-medium">{errors.confirmPassword}</p>
+						)}
+					</div>
+
+					{/* Submit Button */}
+					<button
+						type="submit"
 						disabled={isSubmitting}
-					/>
-					{errors.password && <p className="text-sm text-red-600">{errors.password}</p>}
-					<p className="text-xs theme-text-muted">
-						Password must be at least 6 characters long
+						className="btn btn-primary w-full text-base mt-6"
+					>
+						{isSubmitting ? (
+							<>
+								<svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+									<circle
+										className="opacity-25"
+										cx="12"
+										cy="12"
+										r="10"
+										stroke="currentColor"
+										strokeWidth="4"
+									></circle>
+									<path
+										className="opacity-75"
+										fill="currentColor"
+										d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+									></path>
+								</svg>
+								Creating Account...
+							</>
+						) : (
+							"Sign Up"
+						)}
+					</button>
+				</form>
+
+				{/* Sign In Link */}
+				<div className="text-center pt-4 border-t theme-border-light">
+					<p className="text-sm theme-text-muted">
+						Already have an account?{" "}
+						<a href={ROUTES.login} className="font-semibold theme-link hover:theme-text transition">
+							Sign in here
+						</a>
 					</p>
 				</div>
-
-				{/* Confirm Password Field */}
-				<div className="space-y-2">
-					<label htmlFor="confirmPassword" className="block text-sm font-medium theme-text">
-						Confirm Password
-					</label>
-					<input
-						type="password"
-						id="confirmPassword"
-						name="confirmPassword"
-						value={formData.confirmPassword}
-						onChange={handleInputChange}
-						className={`w-full rounded-xl border px-4 py-3 theme-text focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-							errors.confirmPassword
-								? "border-red-500 theme-surface"
-								: "theme-border theme-surface"
-						}`}
-						placeholder="Confirm your password"
-						disabled={isSubmitting}
-					/>
-					{errors.confirmPassword && (
-						<p className="text-sm text-red-600">{errors.confirmPassword}</p>
-					)}
-				</div>
-				<button
-					type="submit"
-					disabled={isSubmitting}
-					className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-3 font-medium text-white transition-all duration-200 hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
-				>
-					{isSubmitting ? (
-						<>
-							<svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
-								<circle
-									className="opacity-25"
-									cx="12"
-									cy="12"
-									r="10"
-									stroke="currentColor"
-									strokeWidth="4"
-								></circle>
-								<path
-									className="opacity-75"
-									fill="currentColor"
-									d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-								></path>
-							</svg>
-							Creating Account...
-						</>
-					) : (
-						"Sign Up"
-					)}
-				</button>
-			</form>
-
-			{/* Additional Links */}
-			<div className="mt-8 text-center">
-				<p className="text-sm theme-text-muted">
-					Already have an account?{" "}
-					<a href="/login" className="theme-link hover:theme-text transition">
-						Sign in here
-					</a>
-				</p>
 			</div>
 		</div>
 	)

@@ -2,26 +2,24 @@
 
 import { APIS } from "@/config/constants"
 import { useAuth } from "@/contexts/auth"
+import { SortDirectionType, SortFieldType } from "@/interfaces/common"
 import { IOrder } from "@/interfaces/order"
 import { useState } from "react"
 import { OrdersTable } from "./OrderTable"
 import { DeleteOrderModal } from "./OrdersDeleteModal"
 import { OrderEmpty } from "./OrdersEmpty"
 
-type SortField = "total" | "createdAt"
-type SortDirection = "asc" | "desc"
-
 export default function OrdersListComponent({ orders }: { orders: IOrder[] }) {
 	const { user } = useAuth()
 	const [deletedOrderIds, setDeletedOrderIds] = useState<string[]>([])
-	const [sortField, setSortField] = useState<SortField>("createdAt")
-	const [sortDirection, setSortDirection] = useState<SortDirection>("desc")
+	const [sortField, setSortField] = useState<SortFieldType>("createdAt")
+	const [sortDirection, setSortDirection] = useState<SortDirectionType>("desc")
 	const [deletingOrderId, setDeletingOrderId] = useState<string | null>(null)
 	const [showDeleteConfirm, setShowDeleteConfirm] = useState<string | null>(null)
 
 	const displayedOrders = orders.filter((order) => !deletedOrderIds.includes(order.id))
 
-	const handleSort = (field: SortField) => {
+	const handleSort = (field: SortFieldType) => {
 		if (sortField === field) {
 			setSortDirection(sortDirection === "asc" ? "desc" : "asc")
 		} else {
